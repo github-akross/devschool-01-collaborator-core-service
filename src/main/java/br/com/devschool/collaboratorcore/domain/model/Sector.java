@@ -10,20 +10,17 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 
-@Table(name = "Collaborator")
+@Table(name = "Sector")
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Collaborator {
+public class Sector {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long cpf;
-    @ManyToOne
-    Sector sector ;
-    String name;
-    String gender;
-    LocalDateTime birthdate ;
-    LocalDateTime created_date;
-    LocalDateTime updated_date;
+    private Long id;
+    private String name;
+    private String description;
+    private LocalDateTime created_date;
+    private LocalDateTime updated_date;
 }
