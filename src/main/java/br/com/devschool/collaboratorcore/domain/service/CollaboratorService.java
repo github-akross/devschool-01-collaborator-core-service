@@ -1,7 +1,15 @@
 package br.com.devschool.collaboratorcore.domain.service;
 
 import br.com.devschool.collaboratorcore.domain.model.Collaborator;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.ResponseEntity;
 
-public interface CollaboratorService extends JpaRepository<Collaborator , Long> {
+import java.util.List;
+
+public interface CollaboratorService {
+
+    ResponseEntity<List<Collaborator>> getAllCollaborator();
+
+    ResponseEntity<Collaborator> getCollaboratorByCpf(Long cpf);
+
+
 }

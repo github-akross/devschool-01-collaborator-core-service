@@ -10,14 +10,13 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 
-@Table(name = "Collaborator")
+@Table(name = "collaborator")
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Collaborator {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     Long cpf;
     @ManyToOne
     Sector sector ;

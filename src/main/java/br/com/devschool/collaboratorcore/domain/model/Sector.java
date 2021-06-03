@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 
-@Table(name = "Sector")
+@Table(name = "sector")
 @Entity
 @Data
 @AllArgsConstructor
