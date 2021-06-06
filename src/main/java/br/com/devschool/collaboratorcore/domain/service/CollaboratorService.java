@@ -12,7 +12,7 @@ public interface CollaboratorService {
 
     ResponseEntity<Collaborator> getCollaboratorByCpf(Long cpf); //listagem dos colaboradores pelo cpf
 
-    ResponseEntity<Collaborator> updateCollaboratorbyCpf(Long cpf); // Atulizacao dos colaboradores pelo cpf
+    ResponseEntity<Collaborator> updateCollaboratorbyCpf(Long cpf); // atualização dos colaboradores pelo cpf
 
     //ResponseEntity<Collaborator> deleteCollaboratorbyCpf(Long cpf);
 
