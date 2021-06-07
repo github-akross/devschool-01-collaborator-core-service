@@ -15,27 +15,26 @@ public class SectorController {
 
     //get:  listagem de todos os setores
     @GetMapping("/sector")
-    public ResponseEntity<List<Sector>> getAllSector(){
-
+    public List<Sector> getAllSector(){
         return sectorService.getAllSector() ;
     }
 
     //get: listar 1 sector pelo nome
     @GetMapping("/sector/{name}")
     public ResponseEntity<Sector> getSectorbyName(@PathVariable String name){
-        return sectorService.getSectorbyName(name) ;
+        return sectorService.getSectorByName(name) ;
     }
 
     //deletar Sector pelo id
     @DeleteMapping("/sector/{id}")
     public ResponseEntity<Sector> deleteSectorbyId(@PathVariable Long id){
-        return sectorService.deleteSectorbyId(id) ;
+        return sectorService.deleteSectorById(id) ;
     }
 
     //Atualizar sector pelo id
-    @PatchMapping("/sector/{id}")
+    @PutMapping("/sector/{id}")
     public  ResponseEntity<Sector> updateSectorById(@RequestBody Long id){
-        return sectorService.updateSectorById(id) ;
+        return sectorService.updateSectorById(id);
     }
 
     // Criar sector

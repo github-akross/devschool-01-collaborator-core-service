@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface SectorService {
 
-    ResponseEntity<List<Sector>> getAllSector();
+    List<Sector> getAllSector();
 
-    ResponseEntity<Sector> getSectorbyName(String name);
+    ResponseEntity<Sector> getSectorByName(String name);
 
-    ResponseEntity<Sector> deleteSectorbyId(Long id);
+    ResponseEntity<Sector> deleteSectorById(Long id);
 
     ResponseEntity<Sector> saveSector(Sector sector);
 
