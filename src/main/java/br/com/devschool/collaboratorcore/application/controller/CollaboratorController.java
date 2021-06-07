@@ -1,26 +1,23 @@
 package br.com.devschool.collaboratorcore.application.controller;
 
 import br.com.devschool.collaboratorcore.domain.model.Collaborator;
-import br.com.devschool.collaboratorcore.domain.model.Sector;
 import br.com.devschool.collaboratorcore.domain.service.CollaboratorService;
-import br.com.devschool.collaboratorcore.infrastructure.repository.CollaboratorRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CollaboratorController {
-
-    private  final CollaboratorService collaboratorService;
+    private final CollaboratorService collaboratorService;
 
     //get: listagem de todos os colaboradores
     @GetMapping("/collaborator")
-    public ResponseEntity<List<Collaborator>> getAllCollaborator() {
+    public List<Collaborator> getAllCollaborator() {
 
-        return collaboratorService.getAllCollaborator();
+        return collaboratorService.getAllCollaborators();
     }
 
     //get: lista 1 colaborador pelo cpf

@@ -3,10 +3,8 @@ package br.com.devschool.collaboratorcore.domain.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.type.descriptor.sql.VarcharTypeDescriptor;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 
@@ -21,6 +19,6 @@ public class Sector {
     private Long id;
     private String name;
     private String description;
-    private LocalDateTime created_date;
-    private LocalDateTime updated_date;
+    private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
 }

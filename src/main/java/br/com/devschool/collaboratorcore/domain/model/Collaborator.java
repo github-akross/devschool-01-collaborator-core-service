@@ -3,10 +3,8 @@ package br.com.devschool.collaboratorcore.domain.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.type.descriptor.sql.VarcharTypeDescriptor;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 
@@ -17,12 +15,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Collaborator {
     @Id
-    Long cpf;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String cpf;
     @ManyToOne
-    Sector sector ;
-    String name;
-    String gender;
-    LocalDateTime birthdate ;
-    LocalDateTime created_date;
-    LocalDateTime updated_date;
+    private Sector sector;
+    private String name;
+    private String gender;
+    private LocalDateTime birthdate;
+    private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
 }

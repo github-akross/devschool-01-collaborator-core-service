@@ -3,15 +3,17 @@ package br.com.devschool.collaboratorcore.domain.service.impl;
 import br.com.devschool.collaboratorcore.domain.model.Sector;
 import br.com.devschool.collaboratorcore.domain.service.SectorService;
 import br.com.devschool.collaboratorcore.infrastructure.repository.SectorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@RequiredArgsConstructor
+@Service
 public class SectorServiceImpl implements SectorService {
 
-    @Autowired
-    private SectorRepository sectorRepository;
+    private final SectorRepository sectorRepository;
 
     @Override
     public List<Sector> getAllSector() {

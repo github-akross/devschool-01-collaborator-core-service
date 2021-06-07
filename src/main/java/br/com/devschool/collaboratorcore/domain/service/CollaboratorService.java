@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CollaboratorService {
 
-    ResponseEntity<List<Collaborator>> getAllCollaborator(); //listagem de todos os colaboradores
+    List<Collaborator> getAllCollaborators(); //listagem de todos os colaboradores
 
     ResponseEntity<Collaborator> getCollaboratorByCpf(Long cpf); //listagem dos colaboradores pelo cpf
 
