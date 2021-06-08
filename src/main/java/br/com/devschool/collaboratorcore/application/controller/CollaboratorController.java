@@ -22,7 +22,7 @@ public class CollaboratorController {
 
     //get: lista 1 colaborador pelo cpf
     @GetMapping("/collaborator/{cpf}")
-    public ResponseEntity<Collaborator> getCollaboratorByCpf(@PathVariable Long cpf) {
+    public ResponseEntity<Collaborator> getCollaboratorByCpf(@PathVariable String cpf) {
         return collaboratorService.getCollaboratorByCpf(cpf);
 
     }

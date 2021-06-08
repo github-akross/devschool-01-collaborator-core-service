@@ -10,7 +10,7 @@ public interface CollaboratorService {
 
     List<Collaborator> getAllCollaborators(); //listagem de todos os colaboradores
 
-    ResponseEntity<Collaborator> getCollaboratorByCpf(Long cpf); //listagem dos colaboradores pelo cpf
+    ResponseEntity<Collaborator> getCollaboratorByCpf(String cpf); //listagem dos colaboradores pelo cpf
 
     ResponseEntity<Collaborator> updateCollaboratorbyCpf(Long cpf); // atualização dos colaboradores pelo cpf
 

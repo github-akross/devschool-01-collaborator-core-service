@@ -21,8 +21,8 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     }
 
     @Override
-    public ResponseEntity<Collaborator> getCollaboratorByCpf(Long cpf) {
-        return null;
+    public ResponseEntity<Collaborator> getCollaboratorByCpf(String cpf) {
+        return collaboratorRepository.findByCpf(cpf);
     }
 
     @Override
