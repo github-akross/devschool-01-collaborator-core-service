@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface SectorRepository extends JpaRepository<Sector, Long> {
     List<Sector> findAll();
-    ResponseEntity<Sector> findByName(String name);
+    Sector findByName(String name);
 }

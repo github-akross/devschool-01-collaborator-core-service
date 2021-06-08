@@ -15,32 +15,34 @@ public class SectorController {
 
     //get:  listagem de todos os setores
     @GetMapping("/sector")
-    public List<Sector> getAllSector(){
-        return sectorService.getAllSector() ;
+    public ResponseEntity<List<Sector>> getAllSector(){
+        return ResponseEntity.ok(sectorService.getAllSector());
     }
 
     //get: listar 1 sector pelo nome
     @GetMapping("/sector/{name}")
-    public ResponseEntity<Sector> getSectorbyName(@PathVariable String name){
-        return sectorService.getSectorByName(name) ;
+    public ResponseEntity<Sector> getSectorByName(@PathVariable String name){
+        return ResponseEntity.ok(sectorService.getSectorByName(name));
     }
 
     //deletar Sector pelo id
     @DeleteMapping("/sector/{id}")
-    public ResponseEntity<Sector> deleteSectorbyId(@PathVariable Long id){
-        return sectorService.deleteSectorById(id) ;
+    public ResponseEntity deleteSectorById(@PathVariable Long id){
+        sectorService.deleteSectorById(id);
+        return ResponseEntity.ok().build();
     }
+
 
     //Atualizar sector pelo id
     @PutMapping("/sector/{id}")
     public  ResponseEntity<Sector> updateSectorById(@RequestBody Long id){
-        return sectorService.updateSectorById(id);
+        return ResponseEntity.ok(sectorService.updateSectorById(id));
     }
 
     // Criar sector
     @PostMapping("/sector")
     public ResponseEntity<Sector> saveSector(@RequestBody Sector sector){
-        return sectorService.saveSector(sector);
+        return ResponseEntity.ok(sectorService.saveSector(sector));
     }
 
 }

@@ -15,18 +15,29 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
     private final CollaboratorRepository collaboratorRepository;
 
+
     @Override
     public List<Collaborator> getAllCollaborators() {
-        return collaboratorRepository.findAll();
+        return null;
     }
 
     @Override
-    public ResponseEntity<Collaborator> getCollaboratorByCpf(String cpf) {
-        return collaboratorRepository.findByCpf(cpf);
+    public Collaborator getCollaboratorByCpf(String cpf) {
+        return null;
     }
 
     @Override
-    public ResponseEntity<Collaborator> updateCollaboratorbyCpf(Long cpf) {
+    public Collaborator updateCollaboratorByCpf(String cpf, Collaborator collaborator) {
+        return null;
+    }
+
+    @Override
+    public Collaborator deleteCollaboratorByCpf(String cpf) {
+        return null;
+    }
+
+    @Override
+    public Collaborator createCollaborator(Collaborator collaborator) {
         return null;
     }
 }

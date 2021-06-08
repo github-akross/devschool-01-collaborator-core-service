@@ -21,22 +21,21 @@ public class SectorServiceImpl implements SectorService {
     }
 
     @Override
-    public ResponseEntity<Sector> getSectorByName(String name) {
+    public Sector getSectorByName(String name) {
         return sectorRepository.findByName(name);
     }
 
     @Override
-    public ResponseEntity<Sector> deleteSectorById(Long id) {
+    public void deleteSectorById(Long id) {
+    }
+
+    @Override
+    public Sector saveSector(Sector sector) {
         return null;
     }
 
     @Override
-    public ResponseEntity<Sector> saveSector(Sector sector) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<Sector> updateSectorById(Long id) {
+    public Sector updateSectorById(Long id) {
         return null;
     }
 }

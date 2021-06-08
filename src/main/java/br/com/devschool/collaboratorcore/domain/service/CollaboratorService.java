@@ -10,11 +10,13 @@ public interface CollaboratorService {
 
     List<Collaborator> getAllCollaborators(); //listagem de todos os colaboradores
 
-    ResponseEntity<Collaborator> getCollaboratorByCpf(String cpf); //listagem dos colaboradores pelo cpf
+    Collaborator getCollaboratorByCpf(String cpf); //listagem dos colaboradores pelo cpf
 
-    ResponseEntity<Collaborator> updateCollaboratorbyCpf(Long cpf); // atualização dos colaboradores pelo cpf
+    Collaborator updateCollaboratorByCpf(String cpf, Collaborator collaborator); //atualização dos colaboradores pelo cpf
 
-    //ResponseEntity<Collaborator> deleteCollaboratorbyCpf(Long cpf);
+    Collaborator deleteCollaboratorByCpf(String cpf); //deletando colaboradores pelo cpf
+
+    Collaborator createCollaborator(Collaborator collaborator); //criação dos colaboradores
 
 
 }

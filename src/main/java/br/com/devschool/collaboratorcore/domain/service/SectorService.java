@@ -9,11 +9,11 @@ public interface SectorService {
 
     List<Sector> getAllSector();
 
-    ResponseEntity<Sector> getSectorByName(String name);
+    Sector getSectorByName(String name);
 
-    ResponseEntity<Sector> deleteSectorById(Long id);
+    void deleteSectorById(Long id);
 
-    ResponseEntity<Sector> saveSector(Sector sector);
+    Sector saveSector(Sector sector);
 
-    ResponseEntity<Sector> updateSectorById(Long id);
+    Sector updateSectorById(Long id);
  }

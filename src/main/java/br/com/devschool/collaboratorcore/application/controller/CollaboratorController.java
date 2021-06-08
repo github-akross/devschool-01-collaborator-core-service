@@ -15,38 +15,37 @@ public class CollaboratorController {
 
     //get: listagem de todos os colaboradores
     @GetMapping("/collaborator")
-    public List<Collaborator> getAllCollaborator() {
+    public ResponseEntity<List<Collaborator>> getAllCollaborator() {
 
-        return collaboratorService.getAllCollaborators();
+        return ResponseEntity.ok(collaboratorService.getAllCollaborators());
     }
 
     //get: lista 1 colaborador pelo cpf
     @GetMapping("/collaborator/{cpf}")
     public ResponseEntity<Collaborator> getCollaboratorByCpf(@PathVariable String cpf) {
-        return collaboratorService.getCollaboratorByCpf(cpf);
+        return ResponseEntity.ok(collaboratorService.getCollaboratorByCpf(cpf));
 
     }
 
     //  Atualizar colaborador pelo cpf
-    @PatchMapping("/collaborator/{cpf}")
-    public  ResponseEntity<Collaborator> updateCollaboratorbyCpf(@RequestBody Long cpf){
-        return collaboratorService.updateCollaboratorbyCpf(cpf) ;
+    @PutMapping("/collaborator/{cpf}")
+    public ResponseEntity<Collaborator> updateCollaboratorByCpf(@PathVariable String cpf, @RequestBody Collaborator collaborator) {
+        return ResponseEntity.ok(collaboratorService.updateCollaboratorByCpf(cpf,collaborator));
     }
 
 
-
-//    //deletar Collaborator pelo cpf
-//    @DeleteMapping("/collaborator/{cpf}")
-//    public ResponseEntity<Collaborator> deleteCollaboratorbyCpf(@PathVariable Long cpf){
-//        return collaboratorService.deleteCollaboratorbyCpf(cpf) ;
-//    }
-
-
-//    post: Criacao de colaborador
-//    @PostMapping("/collaborator")
-//    public Collaborator saveCollaborator(@RequestBody Collaborator collaborator) {
-//        return collaboratorService.saveCollaborator(cpf);
-
-
+    //    Deletar Collaborator pelo cpf
+    @DeleteMapping("/collaborator/{cpf}")
+    public ResponseEntity<Collaborator> deleteCollaboratorByCpf(@PathVariable String cpf) {
+        collaboratorService.deleteCollaboratorByCpf(cpf);
+        return ResponseEntity.ok().build();
     }
+
+
+    //    post: Criacao de colaborador
+    @PostMapping("/collaborator")
+    public ResponseEntity<Collaborator> saveCollaborator(@RequestBody Collaborator collaborator) {
+        return ResponseEntity.ok(collaboratorService.createCollaborator(collaborator));
+    }
+}
 
