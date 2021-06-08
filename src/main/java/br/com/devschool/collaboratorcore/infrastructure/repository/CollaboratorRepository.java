@@ -10,6 +10,5 @@ import java.util.List;
 @Repository
 public interface CollaboratorRepository extends JpaRepository<Collaborator, Long> {
     List<Collaborator> findAll();
-
-    ResponseEntity<Collaborator> findByCpf(String cpf);
+    Collaborator findByCpf(String cpf);
 }

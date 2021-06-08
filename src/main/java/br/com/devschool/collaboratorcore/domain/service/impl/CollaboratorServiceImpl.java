@@ -15,15 +15,14 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
     private final CollaboratorRepository collaboratorRepository;
 
-
     @Override
     public List<Collaborator> getAllCollaborators() {
-        return null;
+        return collaboratorRepository.findAll();
     }
 
     @Override
     public Collaborator getCollaboratorByCpf(String cpf) {
-        return null;
+        return collaboratorRepository.findByCpf(cpf);
     }
 
     @Override
