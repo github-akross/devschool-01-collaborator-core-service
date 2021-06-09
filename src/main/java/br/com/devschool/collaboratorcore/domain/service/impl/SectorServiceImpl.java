@@ -4,7 +4,6 @@ import br.com.devschool.collaboratorcore.domain.model.Sector;
 import br.com.devschool.collaboratorcore.domain.service.SectorService;
 import br.com.devschool.collaboratorcore.infrastructure.repository.SectorRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

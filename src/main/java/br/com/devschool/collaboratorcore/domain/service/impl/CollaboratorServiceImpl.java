@@ -1,7 +1,6 @@
 package br.com.devschool.collaboratorcore.domain.service.impl;
 
 import br.com.devschool.collaboratorcore.domain.model.Collaborator;
-import br.com.devschool.collaboratorcore.domain.model.Sector;
 import br.com.devschool.collaboratorcore.domain.service.CollaboratorService;
 import br.com.devschool.collaboratorcore.infrastructure.repository.CollaboratorRepository;
 import br.com.devschool.collaboratorcore.infrastructure.repository.SectorRepository;
