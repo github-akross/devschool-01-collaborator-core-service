@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -22,7 +23,7 @@ public class Collaborator {
     private Sector sector;
     private String name;
     private String gender;
-    private LocalDateTime birthdate;
+    private LocalDate birthdate;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 }
