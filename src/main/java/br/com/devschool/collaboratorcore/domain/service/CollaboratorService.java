@@ -1,5 +1,6 @@
 package br.com.devschool.collaboratorcore.domain.service;
 
+import br.com.devschool.collaboratorcore.domain.dto.CollaboratorRequest;
 import br.com.devschool.collaboratorcore.domain.model.Collaborator;
 import br.com.devschool.collaboratorcore.domain.model.Sector;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ public interface CollaboratorService {
 
     Collaborator getCollaboratorByCpf(String cpf); //listagem dos colaboradores pelo cpf
 
-    Collaborator createCollaborator(Collaborator collaborator); //criação dos colaboradores
+    Collaborator createCollaborator(CollaboratorRequest collaborator); //criação dos colaboradores
 
     Collaborator updateCollaboratorByCpf(String cpf, Collaborator collaborator); //atualização dos colaboradores pelo cpf
 

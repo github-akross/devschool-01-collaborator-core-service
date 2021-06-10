@@ -1,5 +1,6 @@
 package br.com.devschool.collaboratorcore.application.controller;
 
+import br.com.devschool.collaboratorcore.domain.dto.CollaboratorRequest;
 import br.com.devschool.collaboratorcore.domain.model.Collaborator;
 import br.com.devschool.collaboratorcore.domain.service.CollaboratorService;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,8 @@ public class CollaboratorController {
 
     //  post: Criacao de colaborador
     @PostMapping("/collaborator")
-    public ResponseEntity<Collaborator> saveCollaborator(@RequestBody Collaborator collaborator) {
-        return ResponseEntity.ok(collaboratorService.createCollaborator(collaborator));
+    public ResponseEntity<Collaborator> saveCollaborator(@RequestBody CollaboratorRequest collaboratorRequest) {
+        return ResponseEntity.ok(collaboratorService.createCollaborator(collaboratorRequest));
     }
 
     //  Atualizar colaborador pelo cpf

@@ -1,6 +1,8 @@
 package br.com.devschool.collaboratorcore.domain.service.impl;
 
+import br.com.devschool.collaboratorcore.domain.dto.CollaboratorRequest;
 import br.com.devschool.collaboratorcore.domain.model.Collaborator;
+import br.com.devschool.collaboratorcore.domain.model.Sector;
 import br.com.devschool.collaboratorcore.domain.service.CollaboratorService;
 import br.com.devschool.collaboratorcore.infrastructure.repository.CollaboratorRepository;
 import br.com.devschool.collaboratorcore.infrastructure.repository.SectorRepository;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
@@ -32,19 +35,23 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     }
 
     @Override
-    public Collaborator createCollaborator(Collaborator collaborator) {
-        LocalDate birthdate = collaborator.getBirthdate();
+    public Collaborator createCollaborator(CollaboratorRequest collaboratorRequest) {
+        LocalDate birthdate = collaboratorRequest.getBirthdate();
         Period period = Period.between(birthdate, LocalDate.now());
+
+        if(Objects.isNull(collaboratorRequest.getSectorId()) || !sectorRepository.existsById(collaboratorRequest.getSectorId())){
+            throw new RuntimeException();
+        }
+
+        Sector sector = sectorRepository.getById(collaboratorRequest.getSectorId());
+
 
         //  Checar se o colaborador está na blacklist
 
-        if (collaboratorRepository.findByCpf(collaborator.getCpf()).isPresent()) {
+        if (collaboratorRepository.findByCpf(collaboratorRequest.getCpf()).isPresent()) {
             throw new RuntimeException();
         }
 
-        if (!sectorRepository.existsById(collaborator.getSector().getId())) {
-            throw new RuntimeException();
-        }
 
         //  Não é possível cadastrar colaboradores menores de idade ou acima de 60 anos
         if (18 > period.getYears() || period.getYears() > 60) {
@@ -52,14 +59,22 @@ public class CollaboratorServiceImpl implements CollaboratorService {
         }
 
         //  Mão é possível ter mais do que 30% de colaboradores do sexo masculino
-        if (sectorRepository.calculateMalePercentageBySector(collaborator.getSector().getId()) > 30.0) {
+        if (sectorRepository.calculateMalePercentageBySector(collaboratorRequest.getSectorId()) > 30.0) {
             throw new RuntimeException();
         }
 
-        collaborator.setCreatedDate(LocalDateTime.now());
-        collaborator.setUpdatedDate(LocalDateTime.now());
+        Collaborator collaborator = Collaborator.builder()
+                .birthdate(birthdate)
+                .createdDate(LocalDateTime.now())
+                .cpf(collaboratorRequest.getCpf())
+                .gender(collaboratorRequest.getGender())
+                .name(collaboratorRequest.getName())
+                .updatedDate(LocalDateTime.now())
+                .sector(sector)
+                .build();
 
         return collaboratorRepository.save(collaborator);
+
     }
 
     @Override
