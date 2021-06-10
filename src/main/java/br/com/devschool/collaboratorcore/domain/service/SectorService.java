@@ -11,9 +11,9 @@ public interface SectorService {
 
     Sector getSectorByName(String name);
 
-    void deleteSectorById(Long id);
-
     Sector saveSector(Sector sector);
 
     Sector updateSectorById(Long id);
+
+    void deleteSectorById(Long id);
  }

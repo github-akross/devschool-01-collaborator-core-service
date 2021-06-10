@@ -25,10 +25,6 @@ public class SectorServiceImpl implements SectorService {
     }
 
     @Override
-    public void deleteSectorById(Long id) {
-    }
-
-    @Override
     public Sector saveSector(Sector sector) {
         return null;
     }
@@ -36,5 +32,10 @@ public class SectorServiceImpl implements SectorService {
     @Override
     public Sector updateSectorById(Long id) {
         return null;
+    }
+
+    @Override
+    public void deleteSectorById(Long id) {
+        sectorRepository.deleteById(id);
     }
 }
