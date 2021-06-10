@@ -13,18 +13,22 @@ import java.util.List;
 public class CollaboratorController {
     private final CollaboratorService collaboratorService;
 
-    //get: listagem de todos os colaboradores
+    //  get: listagem de todos os colaboradores
     @GetMapping("/collaborator")
     public ResponseEntity<List<Collaborator>> getAllCollaborator() {
-
         return ResponseEntity.ok(collaboratorService.getAllCollaborators());
     }
 
-    //get: lista 1 colaborador pelo cpf
+    //  get: lista 1 colaborador pelo cpf
     @GetMapping("/collaborator/{cpf}")
     public ResponseEntity<Collaborator> getCollaboratorByCpf(@PathVariable String cpf) {
         return ResponseEntity.ok(collaboratorService.getCollaboratorByCpf(cpf));
+    }
 
+    //  post: Criacao de colaborador
+    @PostMapping("/collaborator")
+    public ResponseEntity<Collaborator> saveCollaborator(@RequestBody Collaborator collaborator) {
+        return ResponseEntity.ok(collaboratorService.createCollaborator(collaborator));
     }
 
     //  Atualizar colaborador pelo cpf
@@ -34,18 +38,11 @@ public class CollaboratorController {
     }
 
 
-    //    Deletar Collaborator pelo cpf
+    //  Deletar Collaborator pelo cpf
     @DeleteMapping("/collaborator/{cpf}")
-    public ResponseEntity<Collaborator> deleteCollaboratorByCpf(@PathVariable String cpf) {
+    public ResponseEntity deleteCollaboratorByCpf(@PathVariable String cpf) {
         collaboratorService.deleteCollaboratorByCpf(cpf);
         return ResponseEntity.ok().build();
-    }
-
-
-    //    post: Criacao de colaborador
-    @PostMapping("/collaborator")
-    public ResponseEntity<Collaborator> saveCollaborator(@RequestBody Collaborator collaborator) {
-        return ResponseEntity.ok(collaboratorService.createCollaborator(collaborator));
     }
 }
 

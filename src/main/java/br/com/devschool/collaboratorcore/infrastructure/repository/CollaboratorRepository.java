@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface CollaboratorRepository extends JpaRepository<Collaborator, Long> {
     List<Collaborator> findAll();
     Optional<Collaborator> findByCpf(String cpf);
+    long deleteByCpf(String cpf);
 }

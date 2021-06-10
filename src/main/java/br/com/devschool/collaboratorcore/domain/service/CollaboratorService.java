@@ -12,11 +12,9 @@ public interface CollaboratorService {
 
     Collaborator getCollaboratorByCpf(String cpf); //listagem dos colaboradores pelo cpf
 
-    Collaborator updateCollaboratorByCpf(String cpf, Collaborator collaborator); //atualização dos colaboradores pelo cpf
-
-    Collaborator deleteCollaboratorByCpf(String cpf); //deletando colaboradores pelo cpf
-
     Collaborator createCollaborator(Collaborator collaborator); //criação dos colaboradores
 
+    Collaborator updateCollaboratorByCpf(String cpf, Collaborator collaborator); //atualização dos colaboradores pelo cpf
 
+    void deleteCollaboratorByCpf(String cpf); //deletando colaboradores pelo cpf
 }

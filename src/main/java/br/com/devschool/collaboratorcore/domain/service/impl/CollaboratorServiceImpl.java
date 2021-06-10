@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.LocalDate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,21 +32,11 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     }
 
     @Override
-    public Collaborator updateCollaboratorByCpf(String cpf, Collaborator collaborator) {
-        return null;
-    }
-
-    @Override
-    public Collaborator deleteCollaboratorByCpf(String cpf) {
-        return null;
-    }
-
-    @Override
     public Collaborator createCollaborator(Collaborator collaborator) {
         LocalDate birthdate = collaborator.getBirthdate();
         Period period = Period.between(birthdate, LocalDate.now());
 
-        // Checar se o colaborador está na blacklist
+        //  Checar se o colaborador está na blacklist
 
         if (collaboratorRepository.findByCpf(collaborator.getCpf()).isPresent()) {
             throw new RuntimeException();
@@ -55,12 +46,12 @@ public class CollaboratorServiceImpl implements CollaboratorService {
             throw new RuntimeException();
         }
 
-        // Não é possível cadastrar colaboradores menores de idade ou acima de 60 anos
+        //  Não é possível cadastrar colaboradores menores de idade ou acima de 60 anos
         if (18 > period.getYears() || period.getYears() > 60) {
             throw new RuntimeException();
         }
 
-        // Mão é possível ter mais do que 30% de colaboradores do sexo masculino
+        //  Mão é possível ter mais do que 30% de colaboradores do sexo masculino
         if (sectorRepository.calculateMalePercentageBySector(collaborator.getSector().getId()) > 30.0) {
             throw new RuntimeException();
         }
@@ -69,5 +60,16 @@ public class CollaboratorServiceImpl implements CollaboratorService {
         collaborator.setUpdatedDate(LocalDateTime.now());
 
         return collaboratorRepository.save(collaborator);
+    }
+
+    @Override
+    public Collaborator updateCollaboratorByCpf(String cpf, Collaborator collaborator) {
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public void deleteCollaboratorByCpf(String cpf) {
+        collaboratorRepository.deleteByCpf(cpf);
     }
 }
