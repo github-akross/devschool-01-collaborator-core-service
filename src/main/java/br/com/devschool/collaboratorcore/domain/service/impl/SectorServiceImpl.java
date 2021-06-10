@@ -6,6 +6,7 @@ import br.com.devschool.collaboratorcore.infrastructure.repository.SectorReposit
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -26,11 +27,18 @@ public class SectorServiceImpl implements SectorService {
 
     @Override
     public Sector saveSector(Sector sector) {
-        return null;
+        if (sectorRepository.existsByName(sector.getName())) {
+            throw new RuntimeException();
+        }
+
+        sector.setCreatedDate(LocalDateTime.now());
+        sector.setUpdatedDate(LocalDateTime.now());
+
+        return sectorRepository.save(sector);
     }
 
     @Override
-    public Sector updateSectorById(Long id) {
+    public Sector updateSectorById(Long id, Sector sector) {
         return null;
     }
 

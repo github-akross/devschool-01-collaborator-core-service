@@ -33,8 +33,8 @@ public class SectorController {
 
     //  Atualizar sector pelo id
     @PutMapping("/sector/{id}")
-    public  ResponseEntity<Sector> updateSectorById(@RequestBody Long id){
-        return ResponseEntity.ok(sectorService.updateSectorById(id));
+    public  ResponseEntity<Sector> updateSectorById(@PathVariable Long id, @RequestBody Sector sector){
+        return ResponseEntity.ok(sectorService.updateSectorById(id, sector));
     }
 
     //  Deletar Sector pelo id

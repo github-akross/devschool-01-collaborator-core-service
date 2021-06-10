@@ -1,7 +1,6 @@
 package br.com.devschool.collaboratorcore.domain.service;
 
 import br.com.devschool.collaboratorcore.domain.model.Sector;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ public interface SectorService {
 
     Sector saveSector(Sector sector);
 
-    Sector updateSectorById(Long id);
+    Sector updateSectorById(Long id, Sector sector);
 
     void deleteSectorById(Long id);
  }

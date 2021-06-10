@@ -9,6 +9,7 @@ import java.util.List;
 public interface SectorRepository extends JpaRepository<Sector, Long> {
     List<Sector> findAll();
     Sector findByName(String name);
+    Boolean existsByName(String name);
 
     @Query(value = "SELECT pct " +
             "from (SELECT s.id, " +
