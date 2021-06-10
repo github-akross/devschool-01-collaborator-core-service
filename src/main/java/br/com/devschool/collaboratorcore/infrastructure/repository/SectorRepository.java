@@ -16,10 +16,10 @@ public interface SectorRepository extends JpaRepository<Sector, Long> {
             "             (count(c.id) + 1) * 100.0 / (SELECT count(c2.id) + 1 " +
             "                                    from sector s " +
             "                                             inner join collaborator c2 on s.id = c2.sector_id " +
-            "                                    where s.id = ?0) as pct " +
+            "                                    where s.id = ?1) as pct " +
             "      from sector s " +
             "               inner join collaborator c on s.id = c.sector_id " +
-            "      where c.gender = 'm' and s.id = ?0 " +
+            "      where c.gender = 'm' and s.id = ?1 " +
             "      group by s.id) as sub;", nativeQuery = true)
     float calculateMalePercentageBySector(Long id);
 }

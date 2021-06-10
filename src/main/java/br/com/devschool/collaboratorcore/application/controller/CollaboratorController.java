@@ -3,11 +3,13 @@ package br.com.devschool.collaboratorcore.application.controller;
 import br.com.devschool.collaboratorcore.domain.dto.CollaboratorRequest;
 import br.com.devschool.collaboratorcore.domain.model.Collaborator;
 import br.com.devschool.collaboratorcore.domain.service.CollaboratorService;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -29,7 +31,7 @@ public class CollaboratorController {
     //  post: Criacao de colaborador
     @PostMapping("/collaborator")
     public ResponseEntity<Collaborator> saveCollaborator(@RequestBody CollaboratorRequest collaboratorRequest) {
-        return ResponseEntity.ok(collaboratorService.createCollaborator(collaboratorRequest));
+        return ResponseEntity.accepted().body(collaboratorService.createCollaborator(collaboratorRequest));
     }
 
     //  Atualizar colaborador pelo cpf
