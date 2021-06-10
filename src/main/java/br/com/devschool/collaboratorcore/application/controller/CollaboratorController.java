@@ -31,7 +31,7 @@ public class CollaboratorController {
     //  post: Criacao de colaborador
     @PostMapping("/collaborator")
     public ResponseEntity<Collaborator> saveCollaborator(@RequestBody CollaboratorRequest collaboratorRequest) {
-        return ResponseEntity.accepted().body(collaboratorService.createCollaborator(collaboratorRequest));
+        return ResponseEntity.ok(collaboratorService.createCollaborator(collaboratorRequest));
     }
 
     //  Atualizar colaborador pelo cpf

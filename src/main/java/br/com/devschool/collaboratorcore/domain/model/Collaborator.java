@@ -23,7 +23,7 @@ public class Collaborator {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String cpf;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Sector sector;
     private String name;
     private String gender;
