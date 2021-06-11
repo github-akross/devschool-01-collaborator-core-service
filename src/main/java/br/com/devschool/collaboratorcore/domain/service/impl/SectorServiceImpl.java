@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -39,7 +40,21 @@ public class SectorServiceImpl implements SectorService {
 
     @Override
     public Sector updateSectorById(Long id, Sector sector) {
-        return null;
+        Optional<Sector> sectorOptional = sectorRepository.findById(id);
+
+        if (!sectorOptional.isPresent()) {
+            throw new RuntimeException();
+        }
+
+        Sector sectorExistent = sectorOptional.get();
+
+        return sectorRepository.save(Sector.builder()
+                .id(sectorExistent.getId())
+                .name(sector.getName())
+                .description(sector.getDescription())
+                .createdDate(sectorExistent.getCreatedDate())
+                .updatedDate(LocalDateTime.now())
+                .build());
     }
 
     @Override
