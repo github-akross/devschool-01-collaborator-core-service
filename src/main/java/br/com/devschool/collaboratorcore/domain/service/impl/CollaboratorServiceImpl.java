@@ -59,7 +59,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
         }
 
         //  Mão é possível ter mais do que 30% de colaboradores do sexo masculino
-        if (sectorRepository.calculateMalePercentageBySector(collaboratorRequest.getSectorId()) > 30.0) {
+        if ("m".equals(collaboratorRequest.getGender()) && sectorRepository.calculateMalePercentageBySector(collaboratorRequest.getSectorId()) > 30.0) {
             throw new RuntimeException();
         }
 
