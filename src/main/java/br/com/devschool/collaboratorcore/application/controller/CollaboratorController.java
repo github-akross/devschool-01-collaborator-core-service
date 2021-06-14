@@ -36,8 +36,8 @@ public class CollaboratorController {
 
     //  Atualizar colaborador pelo cpf
     @PutMapping("/collaborator/{cpf}")
-    public ResponseEntity<Collaborator> updateCollaboratorByCpf(@PathVariable String cpf, @RequestBody Collaborator collaborator) {
-        return ResponseEntity.ok(collaboratorService.updateCollaboratorByCpf(cpf,collaborator));
+    public ResponseEntity<Collaborator> updateCollaboratorByCpf(@PathVariable String cpf, @RequestBody CollaboratorRequest collaboratorRequest) {
+        return ResponseEntity.ok(collaboratorService.updateCollaboratorByCpf(cpf,collaboratorRequest));
     }
 
 
