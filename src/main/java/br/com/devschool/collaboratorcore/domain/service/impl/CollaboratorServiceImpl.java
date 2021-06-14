@@ -6,6 +6,7 @@ import br.com.devschool.collaboratorcore.domain.model.Sector;
 import br.com.devschool.collaboratorcore.domain.service.CollaboratorService;
 import br.com.devschool.collaboratorcore.infrastructure.repository.CollaboratorRepository;
 import br.com.devschool.collaboratorcore.infrastructure.repository.SectorRepository;
+import br.com.devschool.collaboratorcore.infrastructure.repository.api.BlackListApi;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -23,6 +24,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
     private final CollaboratorRepository collaboratorRepository;
     private final SectorRepository sectorRepository;
+    private final BlackListApi blackListApi;
 
     @Override
     public List<Collaborator> getAllCollaborators() {

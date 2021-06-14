@@ -1,4 +1,6 @@
 spring:
+  blacklist-api:
+  url: http://localhost:8081/blacklist
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
