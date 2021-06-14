@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -78,8 +79,36 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     }
 
     @Override
-    public Collaborator updateCollaboratorByCpf(String cpf, Collaborator collaborator) {
-        return null;
+    public Collaborator updateCollaboratorByCpf(String cpf, CollaboratorRequest collaboratorRequest) {
+        // Verifica se o setor informado existe
+        Optional<Sector> sectorOptional = sectorRepository.findById(collaboratorRequest.getSectorId());
+
+        if (!sectorOptional.isPresent()) {
+            throw new RuntimeException();
+        }
+
+        Sector sectorExistent = sectorOptional.get();
+
+        // Consulta se o collaborador existe
+
+        Optional<Collaborator> collaboratorOptional = collaboratorRepository.findByCpf(cpf);
+
+        if (!collaboratorOptional.isPresent()) {
+            throw new RuntimeException();
+        }
+
+        Collaborator collaboratorExistent = collaboratorOptional.get();
+
+        return collaboratorRepository.save(Collaborator.builder()
+                .id(collaboratorExistent.getId())
+                .name(collaboratorRequest.getName())
+                .cpf(collaboratorRequest.getCpf())
+                .gender(collaboratorRequest.getGender())
+                .birthdate(collaboratorRequest.getBirthdate())
+                .sector(sectorExistent)
+                .createdDate(collaboratorExistent.getCreatedDate())
+                .updatedDate(LocalDateTime.now())
+                .build());
     }
 
     @Override
