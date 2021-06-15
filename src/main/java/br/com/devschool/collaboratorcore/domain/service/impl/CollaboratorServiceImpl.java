@@ -1,11 +1,13 @@
 package br.com.devschool.collaboratorcore.domain.service.impl;
 
+import br.com.devschool.collaboratorcore.domain.dto.BlackList;
 import br.com.devschool.collaboratorcore.domain.dto.CollaboratorRequest;
 import br.com.devschool.collaboratorcore.domain.model.Collaborator;
 import br.com.devschool.collaboratorcore.domain.model.Sector;
 import br.com.devschool.collaboratorcore.domain.service.CollaboratorService;
 import br.com.devschool.collaboratorcore.infrastructure.repository.CollaboratorRepository;
 import br.com.devschool.collaboratorcore.infrastructure.repository.SectorRepository;
+import br.com.devschool.collaboratorcore.infrastructure.repository.api.BlackListApi;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -24,6 +26,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
     private final CollaboratorRepository collaboratorRepository;
     private final SectorRepository sectorRepository;
+    private final BlackListApi blackListApi;
 
     @Override
     public List<Collaborator> getAllCollaborators() {
@@ -48,6 +51,10 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
 
         //  Checar se o colaborador está na blacklist
+        BlackList blacklistExists = blackListApi.getBlacklistByCpf(collaboratorRequest.getCpf());
+        if (!Objects.isNull(blacklistExists)) {
+            throw new RuntimeException();
+        }
 
         if (collaboratorRepository.findByCpf(collaboratorRequest.getCpf()).isPresent()) {
             throw new RuntimeException();
