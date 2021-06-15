@@ -5,6 +5,7 @@ import br.com.devschool.collaboratorcore.domain.dto.CollaboratorRequest;
 import br.com.devschool.collaboratorcore.domain.model.Collaborator;
 import br.com.devschool.collaboratorcore.domain.model.Sector;
 import br.com.devschool.collaboratorcore.domain.service.CollaboratorService;
+import br.com.devschool.collaboratorcore.infrastructure.exception.CollaboratorNotFoundException;
 import br.com.devschool.collaboratorcore.infrastructure.repository.CollaboratorRepository;
 import br.com.devschool.collaboratorcore.infrastructure.repository.SectorRepository;
 import br.com.devschool.collaboratorcore.infrastructure.repository.api.BlackListApi;
@@ -33,9 +34,10 @@ public class CollaboratorServiceImpl implements CollaboratorService {
         return collaboratorRepository.findAll();
     }
 
+
     @Override
     public Collaborator getCollaboratorByCpf(String cpf) {
-        return collaboratorRepository.findByCpf(cpf).orElseThrow(RuntimeException::new);
+        return collaboratorRepository.findByCpf(cpf).orElseThrow( () -> new CollaboratorNotFoundException(cpf));
     }
 
     @Override
@@ -51,10 +53,10 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
 
         //  Checar se o colaborador está na blacklist
-        BlackList blacklistExists = blackListApi.getBlacklistByCpf(collaboratorRequest.getCpf());
-        if (!Objects.isNull(blacklistExists)) {
+        if(blackListApi.getBlacklistByCpf(collaboratorRequest.getCpf()).isResult()){
             throw new RuntimeException();
         }
+
 
         if (collaboratorRepository.findByCpf(collaboratorRequest.getCpf()).isPresent()) {
             throw new RuntimeException();

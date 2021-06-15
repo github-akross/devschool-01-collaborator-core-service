@@ -16,6 +16,8 @@ import java.util.List;
 public class CollaboratorController {
     private final CollaboratorService collaboratorService;
 
+
+
     //  get: listagem de todos os colaboradores
     @GetMapping("/collaborator")
     public ResponseEntity<List<Collaborator>> getAllCollaborator() {
