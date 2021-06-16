@@ -9,7 +9,6 @@ spring:
   redis:
     host: 'localhost'
     timeout: 10000
-    database: 8
   cache:
     redis:
       time-to-live: 300s

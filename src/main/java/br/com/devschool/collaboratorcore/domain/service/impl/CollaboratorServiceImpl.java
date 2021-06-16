@@ -45,19 +45,19 @@ public class CollaboratorServiceImpl implements CollaboratorService {
         LocalDate birthdate = collaboratorRequest.getBirthdate();
         Period period = Period.between(birthdate, LocalDate.now());
 
+        //  Não é possivel cadastrar um colaborador que está na blacklist
+        if(blackListApi.getBlacklistByCpf(collaboratorRequest.getCpf()).isResult()){
+            throw new RuntimeException();
+        }
+
+        // Não é possivel cadastrar um colaborador com um setor inválido
         if(Objects.isNull(collaboratorRequest.getSectorId()) || !sectorRepository.existsById(collaboratorRequest.getSectorId())){
             throw new RuntimeException();
         }
 
         Sector sector = sectorRepository.getById(collaboratorRequest.getSectorId());
 
-
-        //  Checar se o colaborador está na blacklist
-        if(blackListApi.getBlacklistByCpf(collaboratorRequest.getCpf()).isResult()){
-            throw new RuntimeException();
-        }
-
-
+        // Não é possivel cadastrar um colaborador com o mesmo cpf
         if (collaboratorRepository.findByCpf(collaboratorRequest.getCpf()).isPresent()) {
             throw new RuntimeException();
         }
