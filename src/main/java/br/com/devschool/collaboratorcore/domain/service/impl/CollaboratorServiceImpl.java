@@ -1,6 +1,5 @@
 package br.com.devschool.collaboratorcore.domain.service.impl;
 
-import br.com.devschool.collaboratorcore.domain.dto.BlackList;
 import br.com.devschool.collaboratorcore.domain.dto.CollaboratorRequest;
 import br.com.devschool.collaboratorcore.domain.model.Collaborator;
 import br.com.devschool.collaboratorcore.domain.model.Sector;

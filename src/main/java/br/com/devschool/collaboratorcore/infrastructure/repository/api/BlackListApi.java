@@ -1,8 +1,7 @@
 package br.com.devschool.collaboratorcore.infrastructure.repository.api;
 
 
-import br.com.devschool.collaboratorcore.domain.dto.BlackList;
-import br.com.devschool.collaboratorcore.domain.model.BlacklistResponse;
+import br.com.devschool.collaboratorcore.domain.dto.BlacklistResponse;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

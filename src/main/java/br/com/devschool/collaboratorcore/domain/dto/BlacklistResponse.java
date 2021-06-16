@@ -1,4 +1,4 @@
-package br.com.devschool.collaboratorcore.domain.model;
+package br.com.devschool.collaboratorcore.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
