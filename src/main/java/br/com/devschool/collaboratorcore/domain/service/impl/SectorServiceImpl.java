@@ -2,6 +2,7 @@ package br.com.devschool.collaboratorcore.domain.service.impl;
 
 import br.com.devschool.collaboratorcore.domain.model.Sector;
 import br.com.devschool.collaboratorcore.domain.service.SectorService;
+import br.com.devschool.collaboratorcore.infrastructure.exception.SectorNotFoundException;
 import br.com.devschool.collaboratorcore.infrastructure.repository.SectorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,9 +22,11 @@ public class SectorServiceImpl implements SectorService {
         return sectorRepository.findAll();
     }
 
+
+    //Mostra se o sector ja esta cadastrada
     @Override
     public Sector getSectorByName(String name) {
-        return sectorRepository.findByName(name);
+        return sectorRepository.findByName(name).orElseThrow(() -> new SectorNotFoundException(name));
     }
 
     @Override

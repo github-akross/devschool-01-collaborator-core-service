@@ -35,6 +35,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     }
 
 
+    /*messagem de error pelo Errorhandler que mostra que o cpf nao foi cadastrado*/
     @Override
     public Collaborator getCollaboratorByCpf(String cpf) {
         return collaboratorRepository.findByCpf(cpf).orElseThrow( () -> new CollaboratorNotFoundException(cpf));
