@@ -4,7 +4,7 @@ import br.com.devschool.collaboratorcore.domain.dto.CollaboratorRequest;
 import br.com.devschool.collaboratorcore.domain.model.Collaborator;
 import br.com.devschool.collaboratorcore.domain.model.Sector;
 import br.com.devschool.collaboratorcore.domain.service.CollaboratorService;
-import br.com.devschool.collaboratorcore.infrastructure.exception.CollaboratorNotFoundException;
+import br.com.devschool.collaboratorcore.infrastructure.exception.*;
 import br.com.devschool.collaboratorcore.infrastructure.repository.CollaboratorRepository;
 import br.com.devschool.collaboratorcore.infrastructure.repository.SectorRepository;
 import br.com.devschool.collaboratorcore.infrastructure.repository.api.BlackListApi;
@@ -45,9 +45,11 @@ public class CollaboratorServiceImpl implements CollaboratorService {
         LocalDate birthdate = collaboratorRequest.getBirthdate();
         Period period = Period.between(birthdate, LocalDate.now());
 
-        //  Não é possivel cadastrar um colaborador que está na blacklist
+        // ordem de servico
+
+        //  Não é possivel cadastrar um colaborador que está na blacklist - CollaboratorOnBlacklistException
         if(blackListApi.getBlacklistByCpf(collaboratorRequest.getCpf()).isResult()){
-            throw new RuntimeException();
+            throw new CollaboratorOnBlacklistException(collaboratorRequest.getCpf());
         }
 
         // Não é possivel cadastrar um colaborador com um setor inválido
@@ -57,20 +59,22 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
         Sector sector = sectorRepository.getById(collaboratorRequest.getSectorId());
 
-        // Não é possivel cadastrar um colaborador com o mesmo cpf
+        // Não é possivel cadastrar um colaborador com o mesmo cpf - CollaboratorAlreadyExistsException
         if (collaboratorRepository.findByCpf(collaboratorRequest.getCpf()).isPresent()) {
-            throw new RuntimeException();
+            throw new CollaboratorAlreadyExistsException(collaboratorRequest.getCpf());
         }
 
 
-        //  Não é possível cadastrar colaboradores menores de idade ou acima de 60 anos
+        //  Não é possível cadastrar colaboradores menores de idade ou acima de 60 anos - CollaboratorInvalidBirthdayException
         if (18 > period.getYears() || period.getYears() > 60) {
-            throw new RuntimeException();
+            throw new CollaboratorInvalidBirthdayException(period.getYears());
         }
 
-        //  Mão é possível ter mais do que 30% de colaboradores do sexo masculino
-        if ("m".equals(collaboratorRequest.getGender()) && sectorRepository.calculateMalePercentageBySector(collaboratorRequest.getSectorId()) > 30.0) {
-            throw new RuntimeException();
+        //  Mão é possível ter mais do que 30% de colaboradores do sexo masculino - CollaboratorExceedsMaleGenderPercentageException
+        float malePercentage =  sectorRepository.calculateMalePercentageBySector(collaboratorRequest.getSectorId());
+        if ("m".equals(collaboratorRequest.getGender()) && malePercentage > 30.0) {
+            throw new CollaboratorExceedsMaleGenderPercentageException(malePercentage);
+
         }
 
         Collaborator collaborator = Collaborator.builder()

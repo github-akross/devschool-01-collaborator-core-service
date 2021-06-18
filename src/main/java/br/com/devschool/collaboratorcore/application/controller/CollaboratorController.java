@@ -5,6 +5,7 @@ import br.com.devschool.collaboratorcore.domain.model.Collaborator;
 import br.com.devschool.collaboratorcore.domain.service.CollaboratorService;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,11 @@ public class CollaboratorController {
     //  get: lista 1 colaborador pelo cpf
     @GetMapping("/collaborator/{cpf}")
     public ResponseEntity<Collaborator> getCollaboratorByCpf(@PathVariable String cpf) {
+        if(cpf.isEmpty()){
+            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
         return ResponseEntity.ok(collaboratorService.getCollaboratorByCpf(cpf));
+
     }
 
     //  post: Criacao de colaborador

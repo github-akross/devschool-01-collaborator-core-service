@@ -8,4 +8,5 @@ public class CollaboratorNotFoundException extends RuntimeException {
         this.cpf = cpf ;
     }
 
+
 }
