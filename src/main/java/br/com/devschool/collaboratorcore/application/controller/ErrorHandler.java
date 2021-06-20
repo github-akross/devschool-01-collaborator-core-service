@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ErrorHandler {
-    //colaboadores
+   // Tratativa  de erro do RuntimeException - joga status 500 para o body
+
+    //colaboadores - messagem de error
     @ExceptionHandler(CollaboratorNotFoundException.class)
     public ResponseEntity<String> collaboratorNotFoundException(CollaboratorNotFoundException e){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); // status que vai passar no body da requisicao
     }
 
     @ExceptionHandler(CollaboratorAlreadyExistsException.class)
@@ -28,18 +30,24 @@ public class ErrorHandler {
         return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
-    //blacklist
+
+
+    //blacklist - messagem de error
     @ExceptionHandler(CollaboratorOnBlacklistException.class)
     public  ResponseEntity<String> CollaboratorOnBlacklistException(CollaboratorOnBlacklistException e){
         return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
-    //Sector
+    //Sector - messagem de error
     @ExceptionHandler(SectorNotFoundException.class)
     public  ResponseEntity<String> sectorNotFoundException(SectorNotFoundException e){
         return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
+    @ExceptionHandler(SectorAlreadyExistsException.class)
+    public ResponseEntity<String> SectorAlreadyExistsException(SectorAlreadyExistsException e){
+        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
 
 
 }

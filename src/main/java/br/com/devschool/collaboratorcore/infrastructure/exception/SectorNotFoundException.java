@@ -1,7 +1,6 @@
 package br.com.devschool.collaboratorcore.infrastructure.exception;
 
 
-
 public class SectorNotFoundException extends RuntimeException {
     private  String name;
 

@@ -1,9 +1,7 @@
 package br.com.devschool.collaboratorcore.domain.dto;
 
-import br.com.devschool.collaboratorcore.domain.model.Sector;
 import lombok.Data;
 
-import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 

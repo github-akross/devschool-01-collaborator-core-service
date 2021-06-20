@@ -28,6 +28,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     private final SectorRepository sectorRepository;
     private final BlackListApi blackListApi;
 
+    // ordem de servico
     @Override
     public List<Collaborator> getAllCollaborators() {
         return collaboratorRepository.findAll();
@@ -45,7 +46,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
         LocalDate birthdate = collaboratorRequest.getBirthdate();
         Period period = Period.between(birthdate, LocalDate.now());
 
-        // ordem de servico
+
 
         //  Não é possivel cadastrar um colaborador que está na blacklist - CollaboratorOnBlacklistException
         if(blackListApi.getBlacklistByCpf(collaboratorRequest.getCpf()).isResult()){
@@ -54,7 +55,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
         // Não é possivel cadastrar um colaborador com um setor inválido
         if(Objects.isNull(collaboratorRequest.getSectorId()) || !sectorRepository.existsById(collaboratorRequest.getSectorId())){
-            throw new RuntimeException();
+            throw new RuntimeException(); // status 500
         }
 
         Sector sector = sectorRepository.getById(collaboratorRequest.getSectorId());
@@ -127,6 +128,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     @Override
     @Transactional
     public void deleteCollaboratorByCpf(String cpf) {
+
         collaboratorRepository.deleteByCpf(cpf);
     }
 }

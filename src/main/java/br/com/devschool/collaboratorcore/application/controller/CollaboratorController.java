@@ -17,7 +17,7 @@ import java.util.List;
 public class CollaboratorController {
     private final CollaboratorService collaboratorService;
 
-
+// chamadas das rotas CRUD
 
     //  get: listagem de todos os colaboradores
     @GetMapping("/collaborator")

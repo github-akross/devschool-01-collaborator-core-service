@@ -2,6 +2,7 @@ package br.com.devschool.collaboratorcore.domain.service.impl;
 
 import br.com.devschool.collaboratorcore.domain.model.Sector;
 import br.com.devschool.collaboratorcore.domain.service.SectorService;
+import br.com.devschool.collaboratorcore.infrastructure.exception.SectorAlreadyExistsException;
 import br.com.devschool.collaboratorcore.infrastructure.exception.SectorNotFoundException;
 import br.com.devschool.collaboratorcore.infrastructure.repository.SectorRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class SectorServiceImpl implements SectorService {
     }
 
 
-    //Mostra se o sector ja esta cadastrada
+    //Setor nao existe
     @Override
     public Sector getSectorByName(String name) {
         return sectorRepository.findByName(name).orElseThrow(() -> new SectorNotFoundException(name));
@@ -32,7 +33,7 @@ public class SectorServiceImpl implements SectorService {
     @Override
     public Sector saveSector(Sector sector) {
         if (sectorRepository.existsByName(sector.getName())) {
-            throw new RuntimeException();
+            throw new SectorAlreadyExistsException(sector.getName());
         }
 
         sector.setCreatedDate(LocalDateTime.now());
@@ -48,7 +49,6 @@ public class SectorServiceImpl implements SectorService {
         if (!sectorOptional.isPresent()) {
             throw new RuntimeException();
         }
-
         Sector sectorExistent = sectorOptional.get();
 
         return sectorRepository.save(Sector.builder()
