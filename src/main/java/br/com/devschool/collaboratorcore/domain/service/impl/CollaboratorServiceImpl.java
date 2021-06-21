@@ -53,18 +53,18 @@ public class CollaboratorServiceImpl implements CollaboratorService {
             throw new CollaboratorOnBlacklistException(collaboratorRequest.getCpf());
         }
 
-        // Não é possivel cadastrar um colaborador com um setor inválido
-        if(Objects.isNull(collaboratorRequest.getSectorId()) || !sectorRepository.existsById(collaboratorRequest.getSectorId())){
-            throw new RuntimeException(); // status 500
-        }
-
-        Sector sector = sectorRepository.getById(collaboratorRequest.getSectorId());
-
         // Não é possivel cadastrar um colaborador com o mesmo cpf - CollaboratorAlreadyExistsException
         if (collaboratorRepository.findByCpf(collaboratorRequest.getCpf()).isPresent()) {
             throw new CollaboratorAlreadyExistsException(collaboratorRequest.getCpf());
         }
 
+
+        // Não é possivel cadastrar um colaborador com um setor inválido
+        if(Objects.isNull(collaboratorRequest.getSectorId()) || !sectorRepository.existsById(collaboratorRequest.getSectorId())){
+            throw new SectorNotFoundException(collaboratorRequest.getSectorId().toString());
+        }
+
+        Sector sector = sectorRepository.getById(collaboratorRequest.getSectorId());
 
         //  Não é possível cadastrar colaboradores menores de idade ou acima de 60 anos - CollaboratorInvalidBirthdayException
         if (18 > period.getYears() || period.getYears() > 60) {
