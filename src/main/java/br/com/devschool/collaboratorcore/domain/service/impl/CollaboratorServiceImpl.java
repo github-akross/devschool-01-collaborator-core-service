@@ -8,14 +8,14 @@ import br.com.devschool.collaboratorcore.infrastructure.exception.*;
 import br.com.devschool.collaboratorcore.infrastructure.repository.CollaboratorRepository;
 import br.com.devschool.collaboratorcore.infrastructure.repository.SectorRepository;
 import br.com.devschool.collaboratorcore.infrastructure.repository.api.BlackListApi;
+
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.LocalDate;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -28,14 +28,14 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     private final SectorRepository sectorRepository;
     private final BlackListApi blackListApi;
 
-    // ordem de servico
+    // ordens de servico de Collaborator
     @Override
     public List<Collaborator> getAllCollaborators() {
         return collaboratorRepository.findAll();
     }
 
 
-    /*messagem de error pelo Errorhandler que mostra que o cpf nao foi cadastrado*/
+    // Dispara Collaborator não existe
     @Override
     public Collaborator getCollaboratorByCpf(String cpf) {
         return collaboratorRepository.findByCpf(cpf).orElseThrow( () -> new CollaboratorNotFoundException(cpf));
@@ -46,8 +46,6 @@ public class CollaboratorServiceImpl implements CollaboratorService {
         LocalDate birthdate = collaboratorRequest.getBirthdate();
         Period period = Period.between(birthdate, LocalDate.now());
 
-
-
         //  Não é possivel cadastrar um colaborador que está na blacklist - CollaboratorOnBlacklistException
         if(blackListApi.getBlacklistByCpf(collaboratorRequest.getCpf()).isResult()){
             throw new CollaboratorOnBlacklistException(collaboratorRequest.getCpf());
@@ -57,7 +55,6 @@ public class CollaboratorServiceImpl implements CollaboratorService {
         if (collaboratorRepository.findByCpf(collaboratorRequest.getCpf()).isPresent()) {
             throw new CollaboratorAlreadyExistsException(collaboratorRequest.getCpf());
         }
-
 
         // Não é possivel cadastrar um colaborador com um setor inválido
         if(Objects.isNull(collaboratorRequest.getSectorId()) || !sectorRepository.existsById(collaboratorRequest.getSectorId())){
@@ -94,25 +91,25 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
     @Override
     public Collaborator updateCollaboratorByCpf(String cpf, CollaboratorRequest collaboratorRequest) {
-        // Verifica se o setor informado existe
+        // Não é possivel alterar um collaborator inserindo um setor que não existe
         Optional<Sector> sectorOptional = sectorRepository.findById(collaboratorRequest.getSectorId());
 
         if (!sectorOptional.isPresent()) {
-            throw new RuntimeException();
+            throw new SectorNotFoundException(collaboratorRequest.getSectorId().toString());
         }
 
         Sector sectorExistent = sectorOptional.get();
 
-        // Consulta se o collaborador existe
-
+        // Não é possivel atualizar um collaborator que não existe
         Optional<Collaborator> collaboratorOptional = collaboratorRepository.findByCpf(cpf);
 
         if (!collaboratorOptional.isPresent()) {
-            throw new RuntimeException();
+            throw new CollaboratorNotFoundException(cpf);
         }
 
         Collaborator collaboratorExistent = collaboratorOptional.get();
 
+        // Atualiza o collaborator
         return collaboratorRepository.save(Collaborator.builder()
                 .id(collaboratorExistent.getId())
                 .name(collaboratorRequest.getName())
@@ -128,7 +125,6 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     @Override
     @Transactional
     public void deleteCollaboratorByCpf(String cpf) {
-
         collaboratorRepository.deleteByCpf(cpf);
     }
 }

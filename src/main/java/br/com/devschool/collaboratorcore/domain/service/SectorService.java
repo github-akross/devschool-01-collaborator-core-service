@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface SectorService {
 
+    // Assinatura dos serviços de Sector
+
     List<Sector> getAllSector();
 
     Sector getSectorByName(String name);

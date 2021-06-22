@@ -1,6 +1,7 @@
 package br.com.devschool.collaboratorcore.application.controller;
 
 import br.com.devschool.collaboratorcore.infrastructure.exception.*;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ErrorHandler {
    // Tratativa  de erro do RuntimeException - joga status 500 para o body
 
-    //colaboadores - messagem de error
+    // Collaborator - mensagem de error
     @ExceptionHandler(CollaboratorNotFoundException.class)
     public ResponseEntity<String> collaboratorNotFoundException(CollaboratorNotFoundException e){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); // status que vai passar no body da requisicao
@@ -30,15 +31,13 @@ public class ErrorHandler {
         return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
-
-
-    //blacklist - messagem de error
+    // Blacklist - mensagem de error
     @ExceptionHandler(CollaboratorOnBlacklistException.class)
     public  ResponseEntity<String> CollaboratorOnBlacklistException(CollaboratorOnBlacklistException e){
         return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
-    //Sector - messagem de error
+    // Sector - mensagem de error
     @ExceptionHandler(SectorNotFoundException.class)
     public  ResponseEntity<String> sectorNotFoundException(SectorNotFoundException e){
         return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -48,6 +47,5 @@ public class ErrorHandler {
     public ResponseEntity<String> SectorAlreadyExistsException(SectorAlreadyExistsException e){
         return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
-
 
 }

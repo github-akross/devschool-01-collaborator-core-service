@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 
 @Data
 @AllArgsConstructor
@@ -17,5 +15,4 @@ public class CollaboratorRequest {
     private String name;
     private String gender;
     private LocalDate birthdate;
-
 }

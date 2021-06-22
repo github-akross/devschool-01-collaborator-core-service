@@ -7,13 +7,15 @@ import java.util.List;
 
 public interface CollaboratorService {
 
-    List<Collaborator> getAllCollaborators(); //listagem de todos os colaboradores
+    // Assinatura dos serviços de Collaborator
 
-    Collaborator getCollaboratorByCpf(String cpf); //listagem dos colaboradores pelo cpf
+    List<Collaborator> getAllCollaborators(); // listagem de todos os colaboradores
 
-    Collaborator createCollaborator(CollaboratorRequest collaboratorRequest); //criação dos colaboradores
+    Collaborator getCollaboratorByCpf(String cpf); // listagem de um colaborador pelo cpf
 
-    Collaborator updateCollaboratorByCpf(String cpf, CollaboratorRequest collaboratorRequest); //atualização dos colaboradores pelo cpf
+    Collaborator createCollaborator(CollaboratorRequest collaboratorRequest); // criação dos colaboradores
 
-    void deleteCollaboratorByCpf(String cpf); //deletando colaboradores pelo cpf
+    Collaborator updateCollaboratorByCpf(String cpf, CollaboratorRequest collaboratorRequest); // atualização dos colaboradores pelo cpf
+
+    void deleteCollaboratorByCpf(String cpf); // exclusão dos colaboradores pelo cpf
 }

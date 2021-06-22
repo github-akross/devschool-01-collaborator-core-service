@@ -5,6 +5,7 @@ import br.com.devschool.collaboratorcore.domain.service.SectorService;
 import br.com.devschool.collaboratorcore.infrastructure.exception.SectorAlreadyExistsException;
 import br.com.devschool.collaboratorcore.infrastructure.exception.SectorNotFoundException;
 import br.com.devschool.collaboratorcore.infrastructure.repository.SectorRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +19,14 @@ public class SectorServiceImpl implements SectorService {
 
     private final SectorRepository sectorRepository;
 
+    // ordens de serviço de Sector
+
     @Override
     public List<Sector> getAllSector() {
         return sectorRepository.findAll();
     }
 
-
-    //Setor nao existe
+    // Dispara Setor nao existe
     @Override
     public Sector getSectorByName(String name) {
         return sectorRepository.findByName(name).orElseThrow(() -> new SectorNotFoundException(name));
@@ -32,6 +34,7 @@ public class SectorServiceImpl implements SectorService {
 
     @Override
     public Sector saveSector(Sector sector) {
+        // Não é possivel cadastar um sector que já existe
         if (sectorRepository.existsByName(sector.getName())) {
             throw new SectorAlreadyExistsException(sector.getName());
         }
@@ -44,13 +47,16 @@ public class SectorServiceImpl implements SectorService {
 
     @Override
     public Sector updateSectorById(Long id, Sector sector) {
+        // Não é possveil atualizar um sector que não existe
         Optional<Sector> sectorOptional = sectorRepository.findById(id);
 
         if (!sectorOptional.isPresent()) {
-            throw new RuntimeException();
+            throw new SectorNotFoundException(id.toString());
         }
+
         Sector sectorExistent = sectorOptional.get();
 
+        // Atualiza o sector
         return sectorRepository.save(Sector.builder()
                 .id(sectorExistent.getId())
                 .name(sector.getName())

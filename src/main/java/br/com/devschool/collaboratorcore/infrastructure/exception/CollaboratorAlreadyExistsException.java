@@ -4,7 +4,7 @@ public class CollaboratorAlreadyExistsException  extends  RuntimeException{
     private  String cpf ;
 
     public CollaboratorAlreadyExistsException(String cpf){
-        super(String.format("collaborator com cpf %s ja esta cadastrado", cpf));
+        super(String.format("Colaborador com o cpf %s ja esta cadastrado no sistema", cpf));
         this.cpf = cpf ;
     }
 }
