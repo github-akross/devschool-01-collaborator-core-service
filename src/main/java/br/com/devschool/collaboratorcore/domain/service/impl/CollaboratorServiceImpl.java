@@ -72,7 +72,6 @@ public class CollaboratorServiceImpl implements CollaboratorService {
         float malePercentage =  sectorRepository.calculateMalePercentageBySector(collaboratorRequest.getSectorId());
         if ("m".equals(collaboratorRequest.getGender()) && malePercentage > 30.0) {
             throw new CollaboratorExceedsMaleGenderPercentageException(malePercentage);
-
         }
 
         Collaborator collaborator = Collaborator.builder()

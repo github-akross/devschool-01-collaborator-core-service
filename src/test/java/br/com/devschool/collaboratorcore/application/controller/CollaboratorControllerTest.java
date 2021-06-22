@@ -33,9 +33,16 @@ public class CollaboratorControllerTest {
     @Mock
     private CollaboratorService collaboratorService;
 
-    // Mocka a API
-    @Mock
-    private BlackListApi blackListApi;
+    // Define um mock de CollaboratorRequest
+    private CollaboratorRequest mockCollaboratorRequest(){
+        return  CollaboratorRequest.builder()
+                .cpf("45632178986")
+                .name("Carla")
+                .gender("F")
+                .birthdate(LocalDate.of(1990, 1, 1))
+                .sectorId(1L)
+                .build();
+    }
 
     private final String COLLABORATOR_CPF = "123456786652";
 
@@ -48,14 +55,15 @@ public class CollaboratorControllerTest {
 
     @Test
     public void givenCollaboratorCpfIsBlank() {
-       ResponseEntity<Collaborator> result = controller.getCollaboratorByCpf("");
-        Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR ,result.getStatusCode());
+        ResponseEntity<Collaborator> result = controller.getCollaboratorByCpf("");
+        Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
     }
 
     @Test(expected = CollaboratorAlreadyExistsException.class)
-    public void givenCollaboratorThatExist() {
-        doThrow(CollaboratorAlreadyExistsException.class).when(collaboratorService).createCollaborator(new CollaboratorRequest("45632178986", 1L, "Carla", "F", LocalDate.now()));
-        ResponseEntity<Collaborator> result = controller.createCollaborator(new CollaboratorRequest("45632178996", 1L, "Carla", "F", LocalDate.now()));
+    public void givenCollaboratorThatExistAssertException() {
+        CollaboratorRequest collaboratorRequest = mockCollaboratorRequest();
+        doThrow(CollaboratorAlreadyExistsException.class).when(collaboratorService).createCollaborator(collaboratorRequest);
+        ResponseEntity<Collaborator> result = controller.createCollaborator(collaboratorRequest);
         Assert.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
     }
 }
