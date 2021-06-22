@@ -4,7 +4,12 @@ import br.com.devschool.collaboratorcore.domain.dto.BlacklistResponse;
 import br.com.devschool.collaboratorcore.domain.dto.CollaboratorRequest;
 import br.com.devschool.collaboratorcore.domain.model.Collaborator;
 import br.com.devschool.collaboratorcore.domain.model.Sector;
+import br.com.devschool.collaboratorcore.infrastructure.exception.CollaboratorAlreadyExistsException;
+import br.com.devschool.collaboratorcore.infrastructure.exception.CollaboratorNotFoundException;
+import br.com.devschool.collaboratorcore.infrastructure.exception.CollaboratorOnBlacklistException;
+import br.com.devschool.collaboratorcore.infrastructure.exception.SectorNotFoundException;
 import br.com.devschool.collaboratorcore.infrastructure.repository.CollaboratorRepository;
+import br.com.devschool.collaboratorcore.infrastructure.repository.SectorRepository;
 import br.com.devschool.collaboratorcore.infrastructure.repository.api.BlackListApi;
 
 import org.junit.Assert;
@@ -30,16 +35,27 @@ public class CollaboratorServiceTest {
     // Mocka o repositório
     @Mock
     private CollaboratorRepository collaboratorRepository;
-    private Object CollaboratorAlreadyExistsException;
+
+    @Mock
+    private SectorRepository sectorRepository;
 
     // Mocka a API
     @Mock
     private BlackListApi blackListApi;
 
+    private final String COLLABORATOR_CPF = "123456786652";
+
     // Define um mock de resposta falsa de api
-    private BlacklistResponse mockBlacklistResponse(){
+    private BlacklistResponse mockBlacklistResponseNotDuplicate(){
         return  BlacklistResponse.builder()
                 .result(false)
+                .build();
+    };
+
+    // Define um mock de resposta true de api
+    private BlacklistResponse mockBlacklistResponseDuplicate(){
+        return  BlacklistResponse.builder()
+                .result(true)
                 .build();
     };
 
@@ -66,13 +82,52 @@ public class CollaboratorServiceTest {
                 .build();
     }
 
-    @Test(expected = br.com.devschool.collaboratorcore.infrastructure.exception.CollaboratorAlreadyExistsException.class)
+    // Define um mock de Sector
+    private Sector mockSector(){
+        return  Sector.builder()
+                .id(1L)
+                .name("Teste")
+                .description("Setor Teste")
+                .createdDate(LocalDateTime.now())
+                .updatedDate(LocalDateTime.now())
+                .build();
+    }
+
+    @Test(expected = CollaboratorAlreadyExistsException.class)
     public void givenDuplicateCollaboratorAssertException() {
         Collaborator collaborator = mockCollaborator();
-        when(blackListApi.getBlacklistByCpf(collaborator.getCpf())).thenReturn(mockBlacklistResponse());
+        when(blackListApi.getBlacklistByCpf(collaborator.getCpf())).thenReturn(mockBlacklistResponseNotDuplicate());
         when(collaboratorRepository.findByCpf(collaborator.getCpf())).thenReturn(Optional.of(collaborator));
         collaboratorService.createCollaborator(mockCollaboratorRequest());
         Assert.assertNotNull(collaborator);
         verify(collaboratorService).createCollaborator(mockCollaboratorRequest());
+    }
+
+    // GivenCollaboratorOnBlacklistAssertException
+    @Test(expected = CollaboratorOnBlacklistException.class)
+    public void givenCollaboratorOnBlacklistAssertException() {
+        Collaborator collaborator = mockCollaborator();
+        when(blackListApi.getBlacklistByCpf(collaborator.getCpf())).thenReturn(mockBlacklistResponseDuplicate());
+        collaboratorService.createCollaborator(mockCollaboratorRequest());
+    }
+
+    // GivenCollaboratorRequestSectorNotExistsAssertException
+    @Test(expected = SectorNotFoundException.class)
+    public void givenCollaboratorRequestSectorNotExistsAssertException() {
+        CollaboratorRequest collaboratorRequest = mockCollaboratorRequest();
+        when(blackListApi.getBlacklistByCpf(collaboratorRequest.getCpf())).thenReturn(mockBlacklistResponseNotDuplicate());
+        when(collaboratorRepository.findByCpf(collaboratorRequest.getCpf())).thenReturn(Optional.empty());
+        when(sectorRepository.existsById(collaboratorRequest.getSectorId())).thenReturn(false);
+        collaboratorService.createCollaborator(collaboratorRequest);
+    }
+
+    // GivenCollaboratorCpfThatNotExistsAssertException
+    @Test(expected = CollaboratorNotFoundException.class)
+    public void givenCollaboratorCpfThatNotExistsAssertException() {
+        CollaboratorRequest collaboratorRequest = mockCollaboratorRequest();
+        Sector mockSector = mockSector();
+        when(sectorRepository.findById(collaboratorRequest.getSectorId())).thenReturn(Optional.of(mockSector));
+        when(collaboratorRepository.findByCpf(COLLABORATOR_CPF)).thenReturn(Optional.empty());
+        collaboratorService.updateCollaboratorByCpf(COLLABORATOR_CPF, collaboratorRequest);
     }
 }
