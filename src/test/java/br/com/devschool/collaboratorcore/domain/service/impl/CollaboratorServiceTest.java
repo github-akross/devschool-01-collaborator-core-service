@@ -112,6 +112,14 @@ public class CollaboratorServiceTest {
                 .build();
     }
 
+    // Teste de GetCollaboratorByCpf
+    @Test(expected = CollaboratorNotFoundException.class)
+    public void givenCollaboratorCpfThatNoExistAssertException() {
+        when(collaboratorRepository.findByCpf(any())).thenReturn(Optional.empty());
+
+        collaboratorService.getCollaboratorByCpf(COLLABORATOR_CPF);
+    }
+
     // Teste de CreateCollaborator
     // Criação de colaborador com CPF na lista negra
     @Test(expected = CollaboratorOnBlacklistException.class)
@@ -163,9 +171,17 @@ public class CollaboratorServiceTest {
     @Test(expected = CollaboratorNotFoundException.class)
     public void givenCollaboratorCpfThatNotExistsAssertException() {
         CollaboratorRequest collaboratorRequest = mockCollaboratorRequest();
-        Sector mockSector = mockSector();
-        when(sectorRepository.findById(collaboratorRequest.getSectorId())).thenReturn(Optional.of(mockSector));
         when(collaboratorRepository.findByCpf(COLLABORATOR_CPF)).thenReturn(Optional.empty());
+
+        collaboratorService.updateCollaboratorByCpf(COLLABORATOR_CPF, collaboratorRequest);
+    }
+
+    @Test(expected = SectorNotFoundException.class)
+    public void givenCollaboratorSectorIdThatNotExistsAssertException() {
+        CollaboratorRequest collaboratorRequest = mockCollaboratorRequest();
+        Collaborator collaborator = mockCollaborator();
+        when(collaboratorRepository.findByCpf(COLLABORATOR_CPF)).thenReturn(Optional.of(collaborator));
+        when(sectorRepository.findById(collaboratorRequest.getSectorId())).thenReturn(Optional.empty());
 
         collaboratorService.updateCollaboratorByCpf(COLLABORATOR_CPF, collaboratorRequest);
     }
