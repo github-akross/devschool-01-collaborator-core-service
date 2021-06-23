@@ -118,6 +118,7 @@ public class CollaboratorServiceTest {
     public void givenCollaboratorOnBlacklistAssertException() {
         CollaboratorRequest collaboratorRequest = mockCollaboratorRequest();
         when(blackListApi.getBlacklistByCpf(collaboratorRequest.getCpf())).thenReturn(mockBlacklistResponseDuplicate());
+
         collaboratorService.createCollaborator(collaboratorRequest);
     }
 
@@ -128,6 +129,7 @@ public class CollaboratorServiceTest {
         Collaborator collaborator = mockCollaborator();
         when(blackListApi.getBlacklistByCpf(collaboratorRequest.getCpf())).thenReturn(mockBlacklistResponseNotDuplicate());
         when(collaboratorRepository.findByCpf(collaboratorRequest.getCpf())).thenReturn(Optional.of(collaborator));
+
         collaboratorService.createCollaborator(mockCollaboratorRequest());
 
         Assert.assertNotNull(collaboratorRequest);
@@ -141,6 +143,7 @@ public class CollaboratorServiceTest {
         when(blackListApi.getBlacklistByCpf(collaboratorRequest.getCpf())).thenReturn(mockBlacklistResponseNotDuplicate());
         when(collaboratorRepository.findByCpf(collaboratorRequest.getCpf())).thenReturn(Optional.empty());
         when(sectorRepository.existsById(collaboratorRequest.getSectorId())).thenReturn(false);
+
         collaboratorService.createCollaborator(collaboratorRequest);
     }
 
@@ -163,6 +166,7 @@ public class CollaboratorServiceTest {
         Sector mockSector = mockSector();
         when(sectorRepository.findById(collaboratorRequest.getSectorId())).thenReturn(Optional.of(mockSector));
         when(collaboratorRepository.findByCpf(COLLABORATOR_CPF)).thenReturn(Optional.empty());
+
         collaboratorService.updateCollaboratorByCpf(COLLABORATOR_CPF, collaboratorRequest);
     }
 }
