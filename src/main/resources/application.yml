@@ -1,0 +1,19 @@
+application:
+  blacklist-api:
+    url: http://localhost:8081/blacklist
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: password
+  redis:
+    host: 'localhost'
+    timeout: 10000
+  cache:
+    redis:
+      time-to-live: 300s
+      use-key-prefix: true
+    type: redis
+  #spring
+  jpa:
+    show-sql: true
