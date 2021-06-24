@@ -4,12 +4,15 @@ import br.com.devschool.collaboratorcore.domain.dto.CollaboratorRequest;
 import br.com.devschool.collaboratorcore.domain.model.Collaborator;
 import br.com.devschool.collaboratorcore.domain.model.Sector;
 import br.com.devschool.collaboratorcore.domain.service.CollaboratorService;
+import br.com.devschool.collaboratorcore.domain.service.QueueComponent;
 import br.com.devschool.collaboratorcore.infrastructure.exception.*;
 import br.com.devschool.collaboratorcore.infrastructure.repository.CollaboratorRepository;
 import br.com.devschool.collaboratorcore.infrastructure.repository.SectorRepository;
 import br.com.devschool.collaboratorcore.infrastructure.repository.api.BlackListApi;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +30,14 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     private final CollaboratorRepository collaboratorRepository;
     private final SectorRepository sectorRepository;
     private final BlackListApi blackListApi;
+    private  final QueueComponent queueComponent;
+
+    //AWS
+   @Value("${application.queues.producer.collaborator-url}")
+    private  String collaboratorQueueUrl;
+    public  void sendCollaboratorToQueue(Collaborator collaborator) throws JsonProcessingException {
+        queueComponent.sendMessage(collaborator.collaboratorQueueUrl);
+    }
 
     // ordens de servico de Collaborator
     @Override

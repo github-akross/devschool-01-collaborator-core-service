@@ -2,6 +2,7 @@ package br.com.devschool.collaboratorcore.domain.service;
 
 import br.com.devschool.collaboratorcore.domain.dto.CollaboratorRequest;
 import br.com.devschool.collaboratorcore.domain.model.Collaborator;
+import br.com.devschool.collaboratorcore.domain.model.Sector;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface CollaboratorService {
     Collaborator updateCollaboratorByCpf(String cpf, CollaboratorRequest collaboratorRequest); // atualização dos colaboradores pelo cpf
 
     void deleteCollaboratorByCpf(String cpf); // exclusão dos colaboradores pelo cpf
+
+    void sendCollaboratorToQueue(Sector sector);
 }
