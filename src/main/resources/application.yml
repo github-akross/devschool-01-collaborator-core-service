@@ -1,12 +1,6 @@
 application:
   blacklist-api:
     url: http://localhost:8081/blacklist
-  queues:
-    consumer:
-      collaborator-url: 'aws2-sqs://test2'
-    producer:
-      sector-url: 'aws2-sqs://test1'
-
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
@@ -23,12 +17,3 @@ spring:
   #spring
   jpa:
     show-sql: true
-
-camel:
-    component:
-      aws2-sqs:
-        proxy-host: 'sqs.us-west-2.amazonaws.com'
-        proxy-port: 80
-        region: 'us-west-2'
-        protocol: 'http'
-
