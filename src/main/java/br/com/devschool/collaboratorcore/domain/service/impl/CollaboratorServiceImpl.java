@@ -91,15 +91,6 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
     @Override
     public Collaborator updateCollaboratorByCpf(String cpf, CollaboratorRequest collaboratorRequest) {
-        // Não é possivel alterar um collaborator inserindo um setor que não existe
-        Optional<Sector> sectorOptional = sectorRepository.findById(collaboratorRequest.getSectorId());
-
-        if (!sectorOptional.isPresent()) {
-            throw new SectorNotFoundException(collaboratorRequest.getSectorId().toString());
-        }
-
-        Sector sectorExistent = sectorOptional.get();
-
         // Não é possivel atualizar um collaborator que não existe
         Optional<Collaborator> collaboratorOptional = collaboratorRepository.findByCpf(cpf);
 
@@ -108,6 +99,15 @@ public class CollaboratorServiceImpl implements CollaboratorService {
         }
 
         Collaborator collaboratorExistent = collaboratorOptional.get();
+
+        // Não é possivel alterar um collaborator inserindo um setor que não existe
+        Optional<Sector> sectorOptional = sectorRepository.findById(collaboratorRequest.getSectorId());
+
+        if (!sectorOptional.isPresent()) {
+            throw new SectorNotFoundException(collaboratorRequest.getSectorId().toString());
+        }
+
+        Sector sectorExistent = sectorOptional.get();
 
         // Atualiza o collaborator
         return collaboratorRepository.save(Collaborator.builder()
