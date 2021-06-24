@@ -8,18 +8,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.ProducerTemplate;
 import org.springframework.stereotype.Component;
 
-
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class QueueComponentImpl  implements QueueComponent {
-    private  final ProducerTemplate producerTemplate;
+public class QueueComponentImpl implements QueueComponent {
+    private final ProducerTemplate producerTemplate;
 
-    private  final ObjectMapper objectMapper;
-
+    private final ObjectMapper objectMapper;
 
     @Override
-    public <T> void sendMessage(T message, String queueName) throws  JsonProcessingException{
+    public <T> void sendMessage(T message, String queueName) {
         try{
             producerTemplate.sendBody(queueName, objectMapper.writeValueAsString(message));
         } catch (Exception ex){

@@ -10,6 +10,7 @@ import br.com.devschool.collaboratorcore.domain.model.Sector;
 import br.com.devschool.collaboratorcore.domain.service.CollaboratorService;
 import br.com.devschool.collaboratorcore.infrastructure.exception.*;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -89,7 +90,7 @@ public class CollaboratorControllerTest {
 
     // Testes da rota createCollaborator
     @Test
-    public void givenCollaboratorRequestReturnCollaborator() {
+    public void givenCollaboratorRequestReturnCollaborator() throws JsonProcessingException {
         CollaboratorRequest collaboratorRequest = mockCollaboratorRequest();
         Collaborator collaborator = mockCollaborator();
         doReturn(collaborator).when(collaboratorService).createCollaborator(collaboratorRequest);
@@ -101,7 +102,7 @@ public class CollaboratorControllerTest {
     }
 
     @Test(expected = CollaboratorOnBlacklistException.class)
-    public void givenCollaboratorThatExistOnBlacklistAssertException() {
+    public void givenCollaboratorThatExistOnBlacklistAssertException() throws JsonProcessingException {
         CollaboratorRequest collaboratorRequest = mockCollaboratorRequest();
         doThrow(CollaboratorOnBlacklistException.class).when(collaboratorService).createCollaborator(any());
 
@@ -111,7 +112,7 @@ public class CollaboratorControllerTest {
     }
 
     @Test(expected = CollaboratorAlreadyExistsException.class)
-    public void givenCollaboratorThatExistAssertException() {
+    public void givenCollaboratorThatExistAssertException() throws JsonProcessingException {
         CollaboratorRequest collaboratorRequest = mockCollaboratorRequest();
         doThrow(CollaboratorAlreadyExistsException.class).when(collaboratorService).createCollaborator(any());
 
@@ -121,7 +122,7 @@ public class CollaboratorControllerTest {
     }
 
     @Test(expected = SectorNotFoundException.class)
-    public void givenCollaboratorWithInvalidSectorIdAssertException() {
+    public void givenCollaboratorWithInvalidSectorIdAssertException() throws JsonProcessingException {
         CollaboratorRequest collaboratorRequest = mockCollaboratorRequest();
         doThrow(SectorNotFoundException.class).when(collaboratorService).createCollaborator(any());
 
@@ -131,7 +132,7 @@ public class CollaboratorControllerTest {
     }
 
     @Test(expected = CollaboratorExceedsMaleGenderPercentageException.class)
-    public void givenCollaboratorThatExceedsMaleGenderPercentageAssertException() {
+    public void givenCollaboratorThatExceedsMaleGenderPercentageAssertException() throws JsonProcessingException {
         CollaboratorRequest collaboratorRequest = mockCollaboratorRequest();
         doThrow(CollaboratorExceedsMaleGenderPercentageException.class).when(collaboratorService).createCollaborator(any());
 
@@ -141,7 +142,7 @@ public class CollaboratorControllerTest {
     }
 
     @Test(expected = CollaboratorInvalidBirthdayException.class)
-    public void givenCollaboratorThatHaveInvalidBirthdayAssertException() {
+    public void givenCollaboratorThatHaveInvalidBirthdayAssertException() throws JsonProcessingException {
         CollaboratorRequest collaboratorRequest = mockCollaboratorRequest();
         doThrow(CollaboratorInvalidBirthdayException.class).when(collaboratorService).createCollaborator(any());
 

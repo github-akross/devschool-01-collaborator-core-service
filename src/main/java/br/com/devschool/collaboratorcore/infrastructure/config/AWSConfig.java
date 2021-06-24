@@ -23,7 +23,7 @@ public class AWSConfig {
     private  Integer sqsPort;
 
     @Value("${camel.component.aws2-sqs.region}")
-    private Region sqsRegion;
+    private String sqsRegion;
 
     @Value("${camel.component.aws2-sqs.protocol}")
     private String protocol;
@@ -35,13 +35,13 @@ public class AWSConfig {
         clientConfiguration.setProxyPort(sqsPort);
         clientConfiguration.setProtocol(protocol);
         clientConfiguration.setProxyProtocol(Protocol.HTTP);
-        clientConfiguration.setRegion(sqsRegion.toString());
+        clientConfiguration.setRegion(sqsRegion);
 
         Sqs2Component sqs2Component = new Sqs2Component();
         sqs2Component.setConfiguration(clientConfiguration);
 
-        Sqs2InternalClient interntalClientConfiguration = Sqs2ClientFactory.getSqsClient(sqs2Component.getConfiguration());
-        SqsClient sqsClient = interntalClientConfiguration.getSQSClient();
+        Sqs2InternalClient internalClientConfiguration = Sqs2ClientFactory.getSqsClient(sqs2Component.getConfiguration());
+        SqsClient sqsClient = internalClientConfiguration.getSQSClient();
 
         return sqsClient;
     }

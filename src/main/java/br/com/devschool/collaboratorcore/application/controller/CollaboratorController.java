@@ -4,6 +4,7 @@ import br.com.devschool.collaboratorcore.domain.dto.CollaboratorRequest;
 import br.com.devschool.collaboratorcore.domain.model.Collaborator;
 import br.com.devschool.collaboratorcore.domain.service.CollaboratorService;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class CollaboratorController {
 
     //  post: Criacao de colaborador
     @PostMapping("/collaborator")
-    public ResponseEntity<Collaborator> createCollaborator (@RequestBody CollaboratorRequest collaboratorRequest) {
+    public ResponseEntity<Collaborator> createCollaborator (@RequestBody CollaboratorRequest collaboratorRequest) throws JsonProcessingException {
         return ResponseEntity.ok(collaboratorService.createCollaborator(collaboratorRequest));
     }
 

@@ -9,6 +9,7 @@ import br.com.devschool.collaboratorcore.infrastructure.repository.CollaboratorR
 import br.com.devschool.collaboratorcore.infrastructure.repository.SectorRepository;
 import br.com.devschool.collaboratorcore.infrastructure.repository.api.BlackListApi;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -123,7 +124,7 @@ public class CollaboratorServiceTest {
     // Teste de CreateCollaborator
     // Criação de colaborador com CPF na lista negra
     @Test(expected = CollaboratorOnBlacklistException.class)
-    public void givenCollaboratorOnBlacklistAssertException() {
+    public void givenCollaboratorOnBlacklistAssertException() throws JsonProcessingException {
         CollaboratorRequest collaboratorRequest = mockCollaboratorRequest();
         when(blackListApi.getBlacklistByCpf(collaboratorRequest.getCpf())).thenReturn(mockBlacklistResponseDuplicate());
 
@@ -132,7 +133,7 @@ public class CollaboratorServiceTest {
 
     // Criação de colaborador com cpf que já existe
     @Test(expected = CollaboratorAlreadyExistsException.class)
-    public void givenDuplicateCollaboratorAssertException() {
+    public void givenDuplicateCollaboratorAssertException() throws JsonProcessingException {
         CollaboratorRequest collaboratorRequest = mockCollaboratorRequest();
         Collaborator collaborator = mockCollaborator();
         when(blackListApi.getBlacklistByCpf(collaboratorRequest.getCpf())).thenReturn(mockBlacklistResponseNotDuplicate());
@@ -146,7 +147,7 @@ public class CollaboratorServiceTest {
 
     // Criação de Colaborador com setor que não existe
     @Test(expected = SectorNotFoundException.class)
-    public void givenCollaboratorRequestForNonExistentSectorThenThrowSectorNotFoundException() {
+    public void givenCollaboratorRequestForNonExistentSectorThenThrowSectorNotFoundException() throws JsonProcessingException {
         CollaboratorRequest collaboratorRequest = mockCollaboratorRequest();
         when(blackListApi.getBlacklistByCpf(collaboratorRequest.getCpf())).thenReturn(mockBlacklistResponseNotDuplicate());
         when(collaboratorRepository.findByCpf(collaboratorRequest.getCpf())).thenReturn(Optional.empty());
@@ -157,7 +158,7 @@ public class CollaboratorServiceTest {
 
     // Criação de colaborador masculino acima de 30%
     @Test(expected = CollaboratorExceedsMaleGenderPercentageException.class)
-    public void givenCollaboratorRequestExceedsSectorMalePercentage() {
+    public void givenCollaboratorRequestExceedsSectorMalePercentage() throws JsonProcessingException {
         CollaboratorRequest collaboratorRequest = mockCollaboratorRequest();
         when(blackListApi.getBlacklistByCpf(collaboratorRequest.getCpf())).thenReturn(mockBlacklistResponseNotDuplicate());
         when(collaboratorRepository.findByCpf(collaboratorRequest.getCpf())).thenReturn(Optional.empty());
