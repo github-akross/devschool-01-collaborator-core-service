@@ -63,7 +63,13 @@ public class SectorControllerTest {
     // Teste de CreateSector
     @Test
     public void givenNewSectorReturnSector() {
+        Sector sector = mockSector();
+        doReturn(sector).when(sectorService).saveSector(sector);
 
+        ResponseEntity<Sector> result = controller.saveSector(sector);
+
+        Assert.assertEquals(sector, result.getBody());
+        Assert.assertEquals(HttpStatus.OK, result.getStatusCode());
     }
 
     @Test(expected = SectorAlreadyExistsException.class)
@@ -77,4 +83,5 @@ public class SectorControllerTest {
     }
 
     // Teste de updateSector
+
 }

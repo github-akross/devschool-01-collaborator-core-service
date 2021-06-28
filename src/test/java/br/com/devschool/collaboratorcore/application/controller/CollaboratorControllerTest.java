@@ -22,6 +22,8 @@ import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CollaboratorControllerTest {
@@ -57,7 +59,21 @@ public class CollaboratorControllerTest {
                 .build();
     }
 
+//    private List<Collaborator> mockCollaboratorsList() {
+//        return Arrays.asList(
+//
+//        )
+//    }
+
     private final String COLLABORATOR_CPF = "45632178986";
+
+    // Teste da rota GetAllCollaborator
+//    @Test
+//    public void mustReturnListOfCollaborators() {
+//        collaborator = mockCollaborator();
+//        doReturn(List<collaborator>).when(collaboratorService).getAllCollaborators();
+//
+//    }
 
     // Testes da rota getByCpf
     @Test
