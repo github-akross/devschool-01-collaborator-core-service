@@ -1,17 +1,20 @@
 package br.com.devschool.collaboratorcore.domain.service.impl;
 
-import br.com.devschool.collaboratorcore.domain.service.QueueComponent;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import br.com.devschool.collaboratorcore.domain.service.QueueComponent;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.camel.ProducerTemplate;
-import org.springframework.stereotype.Component;
+
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class QueueComponentImpl implements QueueComponent {
+
     private final ProducerTemplate producerTemplate;
 
     private final ObjectMapper objectMapper;
