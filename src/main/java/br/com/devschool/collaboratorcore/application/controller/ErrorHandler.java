@@ -35,6 +35,7 @@ public class ErrorHandler {
 //    @ExceptionHandler(CollaboratorCpfPassedTheNumberSizeException.class)
 //    public  ResponseEntity<String> CollaboratorCpfPassedTheNumberSizeException(CollaboratorCpfPassedTheNumberSizeException e){
 //        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+//
 //    }
 
     // Blacklist - mensagem de error

@@ -65,6 +65,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 //        //O cpf %s que voce tentou cadastrar passou o tamanho de 11 digitos - CollaboratorCpfPassedTheNumberSizeException
 //        if (collaboratorRepository.findByCpf(collaboratorRequest.getCpf()).isPresent() || true) {
 //            throw new CollaboratorCpfPassedTheNumberSizeException(collaboratorRequest.getCpf());
+//
 //        }
 
         // Não é possivel cadastrar um colaborador com um setor inválido
