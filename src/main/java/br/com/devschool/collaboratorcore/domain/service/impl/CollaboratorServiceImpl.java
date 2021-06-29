@@ -53,19 +53,24 @@ public class CollaboratorServiceImpl implements CollaboratorService {
         Period period = Period.between(birthdate, LocalDate.now());
 
         //  Não é possivel cadastrar um colaborador que está na blacklist - CollaboratorOnBlacklistException
-//        if(blackListApi.getBlacklistByCpf(collaboratorRequest.getCpf()).isResult()){
-//            throw new CollaboratorOnBlacklistException(collaboratorRequest.getCpf());
-//        }
-//
-//        // Não é possivel cadastrar um colaborador com o mesmo cpf - CollaboratorAlreadyExistsException
-//        if (collaboratorRepository.findByCpf(collaboratorRequest.getCpf()).isPresent()) {
-//            throw new CollaboratorAlreadyExistsException(collaboratorRequest.getCpf());
-//        }
-//
-//        // Não é possivel cadastrar um colaborador com um setor inválido
-//        if(Objects.isNull(collaboratorRequest.getSectorId()) || !sectorRepository.existsById(collaboratorRequest.getSectorId())){
-//            throw new SectorNotFoundException(collaboratorRequest.getSectorId().toString());
-//        }
+        if(blackListApi.getBlacklistByCpf(collaboratorRequest.getCpf()).isResult()){
+            throw new CollaboratorOnBlacklistException(collaboratorRequest.getCpf());
+        }
+
+        // Não é possivel cadastrar um colaborador com o mesmo cpf - CollaboratorAlreadyExistsException
+        if (collaboratorRepository.findByCpf(collaboratorRequest.getCpf()).isPresent()) {
+            throw new CollaboratorAlreadyExistsException(collaboratorRequest.getCpf());
+        }
+
+        //O cpf %s que voce tentou cadastrat passou o tamanho de 11 digitos - CollaboratorCpfPassedTheNumberSizeException
+        if (collaboratorRepository.findByCpf(collaboratorRequest.getCpf()).isPresent() || true) {
+            throw new CollaboratorCpfPassedTheNumberSizeException(collaboratorRequest.getCpf());
+        }
+
+        // Não é possivel cadastrar um colaborador com um setor inválido
+        if(Objects.isNull(collaboratorRequest.getSectorId()) || !sectorRepository.existsById(collaboratorRequest.getSectorId())){
+            throw new SectorNotFoundException(collaboratorRequest.getSectorId().toString());
+        }
 
         Sector sector = sectorRepository.getById(collaboratorRequest.getSectorId());
 
@@ -75,10 +80,10 @@ public class CollaboratorServiceImpl implements CollaboratorService {
         }
 
         //  Mão é possível ter mais do que 30% de colaboradores do sexo masculino - CollaboratorExceedsMaleGenderPercentageException
-//        float malePercentage =  sectorRepository.calculateMalePercentageBySector(collaboratorRequest.getSectorId());
-//        if ("m".equals(collaboratorRequest.getGender()) && malePercentage > 30.0) {
-//            throw new CollaboratorExceedsMaleGenderPercentageException(malePercentage);
-//        }
+        float malePercentage =  sectorRepository.calculateMalePercentageBySector(collaboratorRequest.getSectorId());
+        if ("m".equals(collaboratorRequest.getGender()) && malePercentage > 30.0) {
+            throw new CollaboratorExceedsMaleGenderPercentageException(malePercentage);
+        }
 
         Collaborator collaborator = Collaborator.builder()
                 .birthdate(birthdate)

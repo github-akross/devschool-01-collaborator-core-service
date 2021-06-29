@@ -1,6 +1,5 @@
 package br.com.devschool.collaboratorcore.infrastructure.config;
 
-import org.apache.camel.ProducerTemplate;
 import com.amazonaws.services.sqs.AmazonSQS;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

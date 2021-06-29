@@ -1,5 +1,6 @@
 package br.com.devschool.collaboratorcore.application.controller;
 
+import br.com.devschool.collaboratorcore.domain.model.Collaborator;
 import br.com.devschool.collaboratorcore.infrastructure.exception.*;
 
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,11 @@ public class ErrorHandler {
 
     @ExceptionHandler(CollaboratorExceedsMaleGenderPercentageException.class)
     public  ResponseEntity<String> CollaboratorInvalidBirthdayException(CollaboratorExceedsMaleGenderPercentageException e){
+        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(CollaboratorCpfPassedTheNumberSizeException.class)
+    public  ResponseEntity<String> CollaboratorCpfPassedTheNumberSizeException(CollaboratorCpfPassedTheNumberSizeException e){
         return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
