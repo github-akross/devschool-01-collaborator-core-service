@@ -70,8 +70,9 @@
 			<version>${camel.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.camel</groupId>
+			<groupId>org.apache.camel.springboot</groupId>
 			<artifactId>camel-spring-boot-starter</artifactId>
+			<version>3.5.0</version>
 		</dependency>
 
 		<!-- SQS -->
