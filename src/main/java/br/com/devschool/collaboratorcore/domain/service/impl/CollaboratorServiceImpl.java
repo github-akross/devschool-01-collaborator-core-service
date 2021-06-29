@@ -62,10 +62,10 @@ public class CollaboratorServiceImpl implements CollaboratorService {
             throw new CollaboratorAlreadyExistsException(collaboratorRequest.getCpf());
         }
 
-        //O cpf %s que voce tentou cadastrat passou o tamanho de 11 digitos - CollaboratorCpfPassedTheNumberSizeException
-        if (collaboratorRepository.findByCpf(collaboratorRequest.getCpf()).isPresent() || true) {
-            throw new CollaboratorCpfPassedTheNumberSizeException(collaboratorRequest.getCpf());
-        }
+//        //O cpf %s que voce tentou cadastrar passou o tamanho de 11 digitos - CollaboratorCpfPassedTheNumberSizeException
+//        if (collaboratorRepository.findByCpf(collaboratorRequest.getCpf()).isPresent() || true) {
+//            throw new CollaboratorCpfPassedTheNumberSizeException(collaboratorRequest.getCpf());
+//        }
 
         // Não é possivel cadastrar um colaborador com um setor inválido
         if(Objects.isNull(collaboratorRequest.getSectorId()) || !sectorRepository.existsById(collaboratorRequest.getSectorId())){

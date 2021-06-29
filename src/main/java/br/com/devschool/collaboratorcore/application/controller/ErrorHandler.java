@@ -32,10 +32,10 @@ public class ErrorHandler {
         return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
-    @ExceptionHandler(CollaboratorCpfPassedTheNumberSizeException.class)
-    public  ResponseEntity<String> CollaboratorCpfPassedTheNumberSizeException(CollaboratorCpfPassedTheNumberSizeException e){
-        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-    }
+//    @ExceptionHandler(CollaboratorCpfPassedTheNumberSizeException.class)
+//    public  ResponseEntity<String> CollaboratorCpfPassedTheNumberSizeException(CollaboratorCpfPassedTheNumberSizeException e){
+//        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+//    }
 
     // Blacklist - mensagem de error
     @ExceptionHandler(CollaboratorOnBlacklistException.class)
