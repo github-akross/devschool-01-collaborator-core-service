@@ -58,15 +58,16 @@ public class CollaboratorServiceImpl implements CollaboratorService {
         }
 
         // Não é possivel cadastrar um colaborador com o mesmo cpf - CollaboratorAlreadyExistsException
-        if (collaboratorRepository.findByCpf(collaboratorRequest.getCpf()).isPresent()) {
+       Optional<Collaborator>  collaboratorExistsOptional = collaboratorRepository.findByCpf(collaboratorRequest.getCpf());
+        if (collaboratorExistsOptional.isPresent()) {
             throw new CollaboratorAlreadyExistsException(collaboratorRequest.getCpf());
         }
 
-//        //O cpf %s que voce tentou cadastrar passou o tamanho de 11 digitos - CollaboratorCpfPassedTheNumberSizeException
-//        if (collaboratorRepository.findByCpf(collaboratorRequest.getCpf()).isPresent() || true) {
-//            throw new CollaboratorCpfPassedTheNumberSizeException(collaboratorRequest.getCpf());
-//
-//        }
+
+        //O cpf %s que voce tentou cadastrar passou o tamanho de 11 digitos - CollaboratorCpfPassedTheNumberSizeException
+        if (collaboratorRequest.getCpf().length() > 11) {
+            throw new CollaboratorCpfPassedTheNumberSizeException(collaboratorRequest.getCpf());
+        }
 
         // Não é possivel cadastrar um colaborador com um setor inválido
         if(Objects.isNull(collaboratorRequest.getSectorId()) || !sectorRepository.existsById(collaboratorRequest.getSectorId())){
